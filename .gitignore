@@ -1,0 +1,9 @@
+.venv/
+wiki_export/
+*.zip
+__pycache__/
+*.pyc
+.DS_Store
+.env
+index.html
+news_export_view.html
