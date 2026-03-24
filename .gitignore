@@ -7,3 +7,4 @@ __pycache__/
 .env
 index.html
 news_export_view.html
+analysis_*.md
