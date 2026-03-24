@@ -5,7 +5,6 @@ Runs the full pipeline: scrapers → Claude analysis → HTML → git push.
 Can be run manually at any time for an on-demand update.
 """
 
-import os
 import shutil
 import subprocess
 import sys
@@ -170,7 +169,7 @@ def run_git_push() -> None:
         ok, err = run(cmd, timeout=30)
         if not ok:
             log(f"git: ERROR — {label} failed: {err}")
-            notify("Morning Brief", f"git push failed — analysis is local only. Check morning_brief.log.")
+            notify("Morning Brief", f"{label} failed — analysis is local only. Check morning_brief.log.")
             return
 
     log("git: pushed to origin/main")
