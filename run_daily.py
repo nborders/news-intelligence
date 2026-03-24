@@ -15,7 +15,7 @@ REPO_DIR    = Path(__file__).parent.resolve()
 VENV_PYTHON = REPO_DIR / ".venv" / "bin" / "python3"
 LOG_FILE    = REPO_DIR / "morning_brief.log"
 LOG_MAX     = 500   # lines to keep
-CLAUDE_TIMEOUT = 300  # 5 minutes
+CLAUDE_TIMEOUT = 600  # 10 minutes
 
 SCIENCE_URL = "https://en.wikipedia.org/wiki/2026_in_science"
 
@@ -48,7 +48,7 @@ def trim_log() -> None:
 
 # ── Subprocess helpers ────────────────────────────────────────────────────────
 
-def run(cmd: list, timeout: int | None = 120) -> tuple[bool, str]:
+def run(cmd: list, timeout: int | None = 120, stdin_devnull: bool = False) -> tuple[bool, str]:
     """Run a command. Returns (success, stderr_or_stdout_on_error)."""
     try:
         result = subprocess.run(
@@ -57,6 +57,7 @@ def run(cmd: list, timeout: int | None = 120) -> tuple[bool, str]:
             capture_output=True,
             text=True,
             timeout=timeout,
+            stdin=subprocess.DEVNULL if stdin_devnull else None,
         )
         if result.returncode != 0:
             return False, (result.stderr or result.stdout).strip()
@@ -109,6 +110,7 @@ def run_claude() -> Path:
     ok, err = run(
         [claude_bin, "--dangerously-skip-permissions", "-p", "analyze the latest wiki and news exports"],
         timeout=CLAUDE_TIMEOUT,
+        stdin_devnull=True,
     )
     if not ok:
         log(f"claude: ERROR — {err}")
