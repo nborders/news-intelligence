@@ -10,6 +10,13 @@ When asked to "analyze the latest wiki and news exports," follow everything belo
 Read the zip files in this folder, write a `analysis_YYYY-MM-DD.md` file, and save it here.
 Do not open a browser or run `view_export.py` — the user does that themselves.
 
+**Expected zip files:**
+- `Portal_Current_events_export.zip` — news editorial spine (required)
+- `news_export.zip` — supplementary news sources (required)
+- `2026_in_science_export.zip` — science editorial spine (include Science & Discovery section when present; skip that section if absent)
+
+If the science zip is missing, note briefly at the top of the Science & Discovery section: *"Science export not included in this run — run `python3 wiki_scraper.py https://en.wikipedia.org/wiki/2026_in_science` to add it."*
+
 ---
 
 ## The Core Architecture
@@ -32,7 +39,8 @@ Read each source with its bias in mind:
 
 | Source | What it's good for | How to read it |
 |--------|-------------------|----------------|
-| **Wikipedia** | Editorial spine — what's significant | Trust the topic selection; verify claims against other sources |
+| **Wikipedia Current Events** | Editorial spine — what's significant | Trust the topic selection; verify claims against other sources |
+| **Wikipedia — [YEAR] in science** | Science editorial spine — significant discoveries, missions, and findings by month | Same trust model as Current Events. URL pattern: `https://en.wikipedia.org/wiki/[YEAR]_in_science` — update year as the calendar turns |
 | **NPR** | US domestic depth, Iran war context | Centrist US public media. Reliable on facts, tends to center US perspective |
 | **ISW (Bluesky)** | Military ground truth on Ukraine and Iran war | Nonpartisan defense think tank. Strongest source for order of battle, territorial changes, operational analysis. Not opinion. |
 | **Meduza** | Russia insider view, things Russians actually experience | Independent Russian journalism in exile. High credibility on domestic Russian stories — Telegram block, exile communities, war propaganda. |
@@ -40,6 +48,9 @@ Read each source with its bias in mind:
 | **Global Times** | How China frames events | Chinese Communist Party-aligned tabloid. Read to understand Beijing's framing — not as neutral reporting. Note the spin explicitly when you use it. |
 | **The Onion** | Cultural saturation signal | When The Onion jokes about something, it's reached mainstream cultural visibility. That's a data point about narrative saturation, not just a joke. |
 | **Telegram (Meduza, Current Time, NEXTA)** | Russian and Belarusian ground-level signals | NEXTA covers Belarus. Current Time is RFE/RL's Russia service. Useful for things not yet in formal reporting. |
+| **NASA APOD** | Daily space image + expert explanation | One image per day, selected by NASA scientists. Embed at the top of Science & Discovery. If it's a video day, describe it instead and link to the URL. |
+| **Phys.org** | Science news before it hits mainstream press | Aggregates coverage of peer-reviewed research across physics, astronomy, Earth science, biology, tech. Good for finding discoveries 1-3 days before they're on NPR. |
+| **The Conversation (US)** | Academic experts writing for general audiences | Peer-reviewed credibility, accessible prose. Use for context and analysis of science and society stories. Not news — depth. |
 
 ---
 
@@ -78,7 +89,8 @@ Write for a reader who wants signal, not noise.]
 
 1. **One section per major Wikipedia topic** — conflicts, elections, significant deaths, etc. Cover the 3-5 most consequential; don't exhaustively list everything.
 2. **Other Consequential Events** — a single section for significant items that don't warrant their own full section. Use `**Bold label:**` format for sub-items.
-3. **Dispatch from the Absurd** — one humor beat per analysis. Use the `> **ABSURD:**` callout. Find something genuinely funny — dark irony, absurd juxtaposition, a headline that lands wrong. The Center 795/Google Translate story (March 18 analysis) is a good example of the register.
+3. **Science & Discovery** — one consolidated section covering significant developments in science, exploration, and engineering. See Science Coverage guidelines below.
+4. **Dispatch from the Absurd** — one humor beat per analysis. Use the `> **ABSURD:**` callout. Find something genuinely funny — dark irony, absurd juxtaposition, a headline that lands wrong. The Center 795/Google Translate story (March 18 analysis) is a good example of the register.
 
 ### Callout box syntax (three types)
 
@@ -116,7 +128,60 @@ Wikipedia citations can point to the portal or the specific sub-article:
 
 **The Onion signal.** If The Onion ran something about a topic, note it in Dispatch from the Absurd and explain why it's a saturation signal — what it says about where that narrative has landed culturally.
 
-**Length.** A good analysis is 1,000–1,800 words in the body, plus sources. Long enough to be substantive; short enough to read in 15 minutes.
+**Don't inflate stakes with unverified claims.** If a story is significant, the real facts are sufficient. Before asserting a geopolitical fact in a callout — nuclear status, treaty membership, alliance standing, UN classification — pause and confirm it. These are exactly the claims readers are most likely to catch and least likely to forgive. The instinct to reach for an intensifier ("two nuclear powers") when the real situation is already alarming ("nuclear-armed state bombing a neighbor") is a sign to slow down, not speed up.
+
+**Length.** A good analysis is 1,200–2,000 words in the body, plus sources. Long enough to be substantive; short enough to read in 20 minutes. The Science & Discovery section should not crowd out the news — keep it to 250–400 words unless a single story truly warrants more.
+
+---
+
+## Science Coverage
+
+### The section format
+
+```
+## Science & Discovery
+*[One sentence framing what makes this period notable in science]*
+
+![NASA APOD — Title](https://apod.nasa.gov/apod/image/...)
+*Title — Photographer/NASA*
+
+**[Domain — e.g., Space, Geology, Anthropology, Engineering]:** [2–4 sentences.
+What was found or built, why it matters to humans, what it changes or enables.
+Lead with the discovery, not the institution that made it.]
+
+**[Next domain]:** [Same structure.]
+
+> **KEY:** [The single most significant finding this period — something that moves the ball
+> forward in a meaningful way, not just "scientists discovered X".][^N]
+```
+
+**Always open the section with the NASA APOD image** when the `nasa_apod__apod.txt` file is present in the export. Copy the embed markdown exactly as written in that file's "Embed this in the analysis" block. If the day's APOD is a video, write a one-sentence description and link to the URL instead of embedding. Credit the photographer/institution on the caption line.
+
+Use `**Bold label:**` format to separate domains within the section. You don't need a sub-item for every domain every day — only include what's actually newsworthy.
+
+### Priority domains
+
+Cover these when material exists, in this order — space leads:
+
+1. **Space science and exploration** — missions, discoveries, new images, anything that expands what we know about the universe. This is the primary science focus. New discoveries get their own paragraph; don't bury them.
+2. **Human health and medicine** — treatments, disease understanding, breakthroughs that change what's possible for patients
+3. **Environmental and climate science** — findings that affect how we understand what's happening to the planet; actionable data, not just more bad news for its own sake
+4. **Ancient human anthropology** — fossil finds, genetic analysis, discoveries that rewrite the human timeline or migration story
+5. **Pacific Northwest geology** — seismic activity, Cascadia subduction zone research, volcanic monitoring (Mount Rainier, Hood, St. Helens, Baker), landslide risk. **Flag these even if small.** This region has outsized personal and civilizational stakes.
+6. **Applied engineering and materials science** — things humans actually built that are surprising, elegant, or solve a hard problem in a new way
+7. **Sociological patterns** — peer-reviewed findings about how humans actually behave, organize, or change; not trend pieces, actual data
+
+### The science spine
+
+**Wikipedia's "[YEAR] in science" article is the editorial authority for science**, the same way the Current Events portal is the authority for news. It is curated, chronological, and already filtered for significance. Start there. Anchor science items to things that appear on that page.
+
+URL pattern: `https://en.wikipedia.org/wiki/2026_in_science` — update the year as the calendar turns.
+
+The broader Wikipedia exception still applies: significant peer-reviewed findings, mission milestones, and major geological events belong even if the "in science" page hasn't caught up yet — it sometimes lags by days. The bar is still high: *does this change something, enable something, or reveal something that wasn't known before?* A new study confirming what we already knew doesn't clear it. A find that rewrites a timeline or opens a new treatment path does.
+
+### Tone
+
+Write about science the way you'd explain it to a curious, smart non-specialist. Skip jargon unless you define it. The question to answer is always: *so what does this mean for humans?* — whether that's "we can now treat X" or "we now know our ancestors crossed Y 10,000 years earlier than we thought" or "the Cascadia fault shows a new behavior pattern that changes the risk model."
 
 ---
 
@@ -138,3 +203,27 @@ Key things it does right:
 1. Save `analysis_YYYY-MM-DD.md` to this folder
 2. Tell the user it's ready and they can run `python3 view_export.py` to see it in the browser
 3. Do not commit to git unless asked — the user may want to review first
+
+---
+
+## Running the scrapers (reference)
+
+Three scraper runs for a full daily brief:
+
+```bash
+# Current events (news spine)
+python3 wiki_scraper.py
+
+# Science spine — update year when calendar turns
+python3 wiki_scraper.py https://en.wikipedia.org/wiki/2026_in_science
+
+# News + science sources (NASA APOD, Phys.org, The Conversation included by default)
+python3 news_scraper.py
+```
+
+To run science sources only (faster, useful if you just want to refresh science content):
+```bash
+python3 news_scraper.py --sources science
+```
+
+Then tell Claude: *"analyze the latest wiki and news exports"*

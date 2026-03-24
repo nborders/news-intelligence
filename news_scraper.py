@@ -7,14 +7,18 @@ Fetches articles from a curated set of news sources with different
 institutional perspectives, packages everything into a zip for Claude to read.
 
 Sources included:
-  npr         NPR News (US public media)
-  meduza      Meduza (independent Russian journalism, based in Latvia)
-  globaltimes Global Times (Chinese state media — useful for seeing the spin)
-  telegram    Public Telegram channels (independent/Russian perspectives)
+  npr              NPR News (US public media)
+  meduza           Meduza (independent Russian journalism, based in Latvia)
+  globaltimes      Global Times (Chinese state media — useful for seeing the spin)
+  telegram         Public Telegram channels (independent/Russian perspectives)
+  nasa_apod        NASA Astronomy Picture of the Day (image + explanation)
+  phys             Phys.org science news (RSS)
+  theconversation  The Conversation US — academics writing for general audiences (RSS)
 
 Usage:
     python3 news_scraper.py                        # all sources
     python3 news_scraper.py --sources npr meduza   # specific sources only
+    python3 news_scraper.py --sources science      # science sources only
     python3 news_scraper.py --max-articles 10      # fewer articles per source
 
 Requirements:
@@ -168,6 +172,33 @@ SOURCES = {
         "base_url": "https://t.me",
         "telegram": True,
     },
+
+    # ── Science sources ───────────────────────────────────────────────────────
+
+    "nasa_apod": {
+        "label": "NASA Astronomy Picture of the Day",
+        "note": "Daily feature from NASA — high-quality space imagery with explanation by "
+                "professional astronomers. Image URL is extracted for embedding in analysis.",
+        "apod": True,
+    },
+
+    "phys": {
+        "label": "Phys.org",
+        "note": "Science news aggregator covering physics, astronomy, Earth science, biology, "
+                "and technology. Covers peer-reviewed research. Good for recent discoveries "
+                "before they reach mainstream press.",
+        "index_url": "https://phys.org/rss-feed/",
+        "rss": True,
+    },
+
+    "theconversation": {
+        "label": "The Conversation (US)",
+        "note": "Peer-reviewed research written by academic experts for general audiences. "
+                "High credibility. Covers science, society, environment, policy. "
+                "Not news — context and analysis from specialists.",
+        "index_url": "https://theconversation.com/us/articles.atom",
+        "rss": True,
+    },
 }
 
 # Convenience groupings for --sources flag
@@ -176,6 +207,7 @@ SOURCE_GROUPS = {
     "web": ["npr", "meduza", "globaltimes", "isw", "factcheck", "onion"],
     "telegram": ["telegram_meduza", "telegram_currenttime", "telegram_nexta"],
     "analysis": ["isw", "factcheck", "onion"],   # analysis/context layer
+    "science": ["nasa_apod", "phys", "theconversation"],
 }
 
 
@@ -470,6 +502,72 @@ def scrape_web_source(source_key: str, config: dict, out_path: Path,
     return saved
 
 
+# ─── NASA APOD scraper ────────────────────────────────────────────────────────
+
+def scrape_apod(source_key: str, config: dict, out_path: Path,
+                session: requests.Session) -> list[str]:
+    """
+    Fetch NASA Astronomy Picture of the Day via the public API.
+    Extracts the image URL and explanation for embedding in analysis.
+    DEMO_KEY allows 30 req/hour, 50/day — fine for once-daily use.
+    """
+    label = config["label"]
+    api_url = "https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY"
+
+    print(f"\n  🔭 {label}")
+    print(f"     {api_url}")
+
+    response = fetch(api_url, session)
+    if not response:
+        return []
+
+    try:
+        data = json.loads(response)
+    except json.JSONDecodeError as e:
+        print(f"    ✗ APOD JSON parse error: {e}")
+        return []
+
+    title       = data.get("title", "Unknown")
+    explanation = data.get("explanation", "")
+    image_url   = data.get("url", "")
+    hdurl       = data.get("hdurl", image_url)   # prefer HD if available
+    media_type  = data.get("media_type", "image")
+    date        = data.get("date", "")
+    copyright   = data.get("copyright", "").strip() or "NASA"
+
+    # For videos (rare), fall back to the thumbnail URL
+    embed_url = hdurl if media_type == "image" else image_url
+
+    out_lines = [
+        f"# NASA Astronomy Picture of the Day",
+        f"Date: {date}",
+        f"Title: {title}",
+        f"Media type: {media_type}",
+        f"Image URL: {embed_url}",
+        f"Copyright: {copyright}",
+        f"Source: https://apod.nasa.gov/apod/astropod.html",
+        "",
+        "## Explanation",
+        explanation,
+        "",
+        "## Embed this in the analysis (copy exactly)",
+        f"![NASA APOD — {title}]({embed_url})",
+        f"*{title}* — {copyright}",
+        "",
+        "## Note for Claude",
+        "Place the image block at the top of the Science & Discovery section, "
+        "before the first bold-label item. Use the embed markdown above exactly. "
+        "If media_type is 'video', describe the video instead of embedding and link to the URL.",
+    ]
+
+    fname = f"{source_key}__apod.txt"
+    fpath = out_path / fname
+    fpath.write_text("\n".join(out_lines), encoding="utf-8")
+    size = fpath.stat().st_size
+    print(f"     ✓ APOD: \"{title}\" → {fname} ({size:,} bytes)")
+    return [fname]
+
+
 # ─── Main ─────────────────────────────────────────────────────────────────────
 
 def run(source_keys: list[str], max_articles: int = 15, max_posts: int = 20,
@@ -496,6 +594,8 @@ def run(source_keys: list[str], max_articles: int = 15, max_posts: int = 20,
             files = scrape_telegram(key, config, out_path, session, max_posts)
         elif config.get("bluesky"):
             files = scrape_bluesky(key, config, out_path, session, max_posts)
+        elif config.get("apod"):
+            files = scrape_apod(key, config, out_path, session)
         elif config.get("rss"):
             files = scrape_rss(key, config, out_path, session, max_articles)
         else:
@@ -534,21 +634,30 @@ def main():
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Sources:
-  npr                NPR News (US public media)
-  meduza             Meduza — independent Russian journalism (English)
-  globaltimes        Global Times — Chinese state media
-  telegram_meduza    Meduza Telegram channel (Russian-language)
-  telegram_currenttime  Current Time / RFE-RL Russia (Russian-language)
-  telegram_nexta     NEXTA — Belarusian independent media
+  npr                  NPR News (US public media)
+  meduza               Meduza — independent Russian journalism (English)
+  globaltimes          Global Times — Chinese state media
+  isw                  Institute for the Study of War (Bluesky)
+  factcheck            FactCheck.org (RSS)
+  onion                The Onion — satire / cultural saturation signal
+  telegram_meduza      Meduza Telegram channel (Russian-language)
+  telegram_currenttime Current Time / RFE-RL Russia (Russian-language)
+  telegram_nexta       NEXTA — Belarusian independent media
+  nasa_apod            NASA Astronomy Picture of the Day (image + explanation)
+  phys                 Phys.org science news (RSS)
+  theconversation      The Conversation US — academic experts (RSS)
 
 Groups:
-  all                All sources (default)
-  web                npr + meduza + globaltimes only
-  telegram           All telegram channels only
+  all                  All sources (default)
+  web                  npr + meduza + globaltimes + isw + factcheck + onion
+  telegram             All telegram channels only
+  science              nasa_apod + phys + theconversation
+  analysis             isw + factcheck + onion
 
 Examples:
   python3 news_scraper.py
   python3 news_scraper.py --sources web
+  python3 news_scraper.py --sources science
   python3 news_scraper.py --sources npr meduza
   python3 news_scraper.py --sources telegram --max-posts 30
         """
