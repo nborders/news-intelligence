@@ -107,7 +107,7 @@ def run_claude() -> Path:
     before = set(REPO_DIR.glob("analysis_*.md"))
 
     ok, err = run(
-        [claude_bin, "-p", "analyze the latest wiki and news exports"],
+        [claude_bin, "--dangerously-skip-permissions", "-p", "analyze the latest wiki and news exports"],
         timeout=CLAUDE_TIMEOUT,
     )
     if not ok:
