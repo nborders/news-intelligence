@@ -5,6 +5,7 @@ __pycache__/
 *.pyc
 .DS_Store
 .env
-index.html
+/index.html
+analysis_*.html
 news_export_view.html
 analysis_*.md
