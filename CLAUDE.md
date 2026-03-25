@@ -104,6 +104,31 @@ Write for a reader who wants signal, not noise.]
 
 Only use `KEY` or `WATCH` once or twice per section maximum. They lose meaning if overused.
 
+### Timeline blocks (optional, for major ongoing stories)
+
+For sections covering large, multi-week ongoing events (wars, major political proceedings, economic crises), include a timeline block after the KEY/WATCH callout. Use the fenced `timeline` format:
+
+```timeline [Wikipedia article name] | [Wikipedia article URL]
+YYYY-MM-DD | Short event title | 1–3 sentence context note for the hover tooltip | Wikipedia URL for this event
+YYYY-MM-DD | Short event title | 1–3 sentence context note | Wikipedia URL
+```
+
+**Example:**
+```timeline 2026 Iran war | https://en.wikipedia.org/wiki/2026_Israel%E2%80%93Iran_war
+2026-02-13 | US–Israel air campaign begins | After Iran's missile barrage strikes Haifa's port district, US and Israeli air forces launch coordinated strikes on IRGC infrastructure across western Iran. | https://en.wikipedia.org/wiki/2026_Israel%E2%80%93Iran_war
+2026-02-19 | Iran threatens Hormuz closure | IRGC naval command announces it will mine the strait if strikes continue. Oil surges to $112/barrel. US Fifth Fleet repositions two carrier groups. | https://en.wikipedia.org/wiki/Strait_of_Hormuz
+2026-03-24 | Trump declares victory; Israel says weeks remain | Trump posts "MISSION ACCOMPLISHED" as IDF says Iran's reconstitution capability requires 3–4 more weeks. ISW notes diverging timelines. | https://en.wikipedia.org/wiki/2026_Israel%E2%80%93Iran_war
+```
+
+**Rules:**
+- Carry forward ALL previous entries each run — the timeline accumulates. Append new entries for today; do not remove old ones.
+- Entries must be in chronological order, oldest first.
+- Dates must be ISO format `YYYY-MM-DD` — the renderer uses them to mark "today" automatically.
+- Every entry needs a Wikipedia URL. Use the main article URL if no specific sub-article exists.
+- The entry URL (field 4) links from the hover tooltip — choose the most relevant Wikipedia page for that specific event.
+- Use the main article URL in the header (field after the language tag) — this links from the timeline box header.
+- Only include timelines for sections about major, multi-week ongoing stories. Do NOT include in: Science & Discovery, Dispatch from the Absurd, Other Consequential Events, or one-off single-day events.
+
 ### Footnotes
 
 Every specific factual claim needs a footnote. Format:
