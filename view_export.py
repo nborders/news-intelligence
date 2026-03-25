@@ -333,6 +333,128 @@ details[open] summary::after { content: ' ▾'; }
   cursor: pointer;
 }
 .toggle-btn:hover { background: #2e2820; color: #c98a2e; border-color: #c98a2e; }
+
+/* ── Event timelines ──────────────────────────────────────────────────── */
+.tl-box {
+  border: 1px solid #3a342e;
+  border-radius: 4px;
+  background: #211e1a;
+  padding: 12px;
+  margin-top: 12px;
+}
+.tl-box-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+.tl-box-label {
+  color: #8a7f6a;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+.tl-wiki {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  text-decoration: none;
+}
+.tl-wiki span { font-size: 10px; color: #6eadd4; }
+.tl-wiki:hover span { text-decoration: underline; }
+
+.vtl { position: relative; padding-left: 76px; }
+.vtl::before {
+  content: '';
+  position: absolute;
+  left: 65px; top: 6px; bottom: 6px;
+  width: 1px;
+  background: #3a342e;
+}
+.vtl-row {
+  position: relative;
+  margin-bottom: 10px;
+  padding-left: 14px;
+  cursor: default;
+}
+.vtl-row:last-child { margin-bottom: 0; }
+.vtl-date {
+  position: absolute;
+  left: -76px;
+  width: 62px;
+  text-align: right;
+  font-size: 10px;
+  color: #8a7f6a;
+  line-height: 1.6;
+  padding-top: 1px;
+}
+.vtl-dot {
+  position: absolute;
+  left: -5px; top: 5px;
+  width: 9px; height: 9px;
+  border-radius: 50%;
+  background: #3a342e;
+  border: 1px solid #4a4438;
+  transition: background 0.12s, border-color 0.12s;
+}
+.vtl-row[data-tip-title]:hover .vtl-dot { background: #6eadd4; border-color: #6eadd4; }
+.vtl-event {
+  font-size: 11px;
+  color: #c8bfa8;
+  line-height: 1.6;
+  transition: color 0.12s;
+}
+.vtl-row[data-tip-title]:hover .vtl-event { color: #e8dfc8; }
+.vtl-row.today .vtl-date { color: #c98a2e; font-weight: 600; }
+.vtl-row.today .vtl-dot {
+  background: #c98a2e; border-color: #c98a2e;
+  width: 11px; height: 11px;
+  left: -6px; top: 4px;
+}
+.vtl-row.today .vtl-event { color: #e8dfc8; font-weight: 600; }
+.vtl-row.today[data-tip-title]:hover .vtl-dot { background: #e09030; border-color: #e09030; }
+
+/* ── Timeline hover tooltip ───────────────────────────────────────────── */
+#tl-tooltip {
+  display: none;
+  position: absolute;
+  z-index: 9999;
+  width: 280px;
+  background: #1e1a10;
+  border: 1px solid #c98a2e;
+  border-radius: 5px;
+  padding: 12px 14px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.65);
+  pointer-events: auto;
+  font-size: 13px;
+  line-height: 1.5;
+}
+/* Invisible bridge fills gap between tooltip bottom and row so mouse
+   can travel to the tooltip without triggering the hide timer. */
+#tl-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 0; right: 0;
+  height: 14px;
+}
+.tip-date  { font-size: 10px; color: #8a7f6a; letter-spacing: 0.06em; margin-bottom: 4px; }
+.tip-title { font-size: 12px; color: #e8dfc8; font-weight: 600; line-height: 1.4; margin-bottom: 6px; }
+.tip-note  { font-size: 11px; color: #b8b0a0; line-height: 1.5; margin-bottom: 10px; }
+.tip-link  {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 10px;
+  color: #6eadd4;
+  text-decoration: none;
+  border: 1px solid #3a342e;
+  border-radius: 3px;
+  padding: 4px 10px;
+  background: #2a2520;
+  transition: border-color 0.12s, color 0.12s;
+}
+.tip-link:hover { border-color: #6eadd4; color: #8ac8e8; }
 """
 
 # ─── JavaScript ───────────────────────────────────────────────────────────────
