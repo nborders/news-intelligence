@@ -732,6 +732,11 @@ def render_analysis(md_path: Path) -> Path:
                 body_html.append(f'<p>{inline_md(html.escape(joined), fn_defs)}</p>')
             paragraph_buf.clear()
 
+    # Fenced block state
+    in_code_block = False
+    code_lang = ""
+    code_buf: list[str] = []
+
     page_title = "Current Events Analysis"
     meta_line = ""
 
@@ -746,6 +751,30 @@ def render_analysis(md_path: Path) -> Path:
             continue
 
         if in_footnote_section:
+            continue
+
+        # ── Fenced code / timeline block ─────────────────────────────────
+        if line.startswith("```"):
+            if not in_code_block:
+                in_code_block = True
+                code_lang = line[3:].strip()
+                code_buf = []
+            else:
+                in_code_block = False
+                if code_lang.startswith("timeline"):
+                    flush_paragraph()
+                    body_html.append(render_timeline(code_lang, code_buf))
+                else:
+                    flush_paragraph()
+                    code_text = html.escape("\n".join(code_buf))
+                    lang_class = f' class="language-{html.escape(code_lang)}"' if code_lang else ""
+                    body_html.append(f'<pre><code{lang_class}>{code_text}</code></pre>')
+                code_buf = []
+                code_lang = ""
+            continue
+
+        if in_code_block:
+            code_buf.append(line)
             continue
 
         # Block-level image: a line that is only ![alt](url)
