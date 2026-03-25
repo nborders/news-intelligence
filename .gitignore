@@ -9,3 +9,4 @@ __pycache__/
 analysis_*.html
 news_export_view.html
 analysis_*.md
+.superpowers/
