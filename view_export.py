@@ -549,7 +549,7 @@ def render_timeline(lang_line: str, lines: list[str]) -> str:
     # ── Parse header ──────────────────────────────────────────────────────
     header = lang_line[len("timeline"):].strip()
     parts = header.split(" | ", 1)
-    article_name = parts[0].strip() if parts else "Timeline"
+    article_name = parts[0].strip() or "Timeline"
     wiki_url = parts[1].strip() if len(parts) > 1 else ""
 
     today_str = datetime.date.today().isoformat()  # "2026-03-24"
@@ -575,6 +575,8 @@ def render_timeline(lang_line: str, lines: list[str]) -> str:
         title     = fields[1].strip()
         note      = fields[2].strip() if len(fields) > 2 else ""
         entry_url = fields[3].strip() if len(fields) > 3 else wiki_url
+        if entry_url and not entry_url.startswith(("https://", "http://")):
+            entry_url = wiki_url
 
         is_today = date_str == today_str
 
@@ -606,7 +608,7 @@ def render_timeline(lang_line: str, lines: list[str]) -> str:
 
     # ── Wikipedia header link ─────────────────────────────────────────────
     wiki_link = ""
-    if wiki_url:
+    if wiki_url and wiki_url.startswith(("https://", "http://")):
         wiki_link = (
             f'<a class="tl-wiki" href="{html.escape(wiki_url)}"'
             f' target="_blank" rel="noopener">'
