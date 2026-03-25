@@ -106,6 +106,9 @@ body {
   color: #8a7f6a; font-size: 14px; margin-top: 10px; line-height: 1.6;
   letter-spacing: 0.03em; text-transform: uppercase;
 }
+.masthead .rendered-at {
+  font-size: 11px; color: #5a5248; margin-top: 4px; text-transform: none; letter-spacing: 0.02em;
+}
 
 /* Legacy .meta outside masthead */
 .meta { color: #8a7f6a; font-size: 14px; margin-bottom: 36px; line-height: 1.6; }
@@ -831,6 +834,11 @@ def wrap_sections(items: list[str]) -> list[str]:
                 body_parts.append(next_item)
                 i += 1
 
+            # Hoist any timeline box to the top of the section body,
+            # regardless of where Claude placed it in the markdown.
+            timelines = [p for p in body_parts if p.startswith('<div class="tl-box">')]
+            body_parts = timelines + [p for p in body_parts if not p.startswith('<div class="tl-box">')]
+
             # Strip trailing <hr> from body (it belongs between sections, not inside)
             result_hr = False
             while body_parts and body_parts[-1] == '<hr>':
@@ -1041,9 +1049,15 @@ def render_analysis(md_path: Path) -> Path:
             break
 
     # ── Assemble page ──
+    _now = datetime.datetime.now()
+    rendered_at = (
+        f"{_now.strftime('%B')} {_now.day}, {_now.year} · "
+        f"{_now.strftime('%I:%M%p').lstrip('0').lower()}"
+    )
     masthead = f"""<div class="masthead">
   <h1>{html.escape(page_title)}</h1>
   {'<p class="meta">' + html.escape(meta_line) + '</p>' if meta_line else ''}
+  <p class="meta rendered-at">Rendered {html.escape(rendered_at)}</p>
   <button class="toggle-btn" id="toggle-all-btn" onclick="toggleAllSections()">Collapse all</button>
 </div>"""
 

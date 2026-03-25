@@ -106,7 +106,7 @@ Only use `KEY` or `WATCH` once or twice per section maximum. They lose meaning i
 
 ### Timeline blocks (optional, for major ongoing stories)
 
-For sections covering large, multi-week ongoing events (wars, major political proceedings, economic crises), include a timeline block after the KEY/WATCH callout. Use the fenced `timeline` format:
+For sections covering large, multi-week ongoing events (wars, major political proceedings, economic crises), include a timeline block immediately after the one-sentence subtitle line and before the body paragraphs. Use the fenced `timeline` format:
 
 ```timeline [Wikipedia article name] | [Wikipedia article URL]
 YYYY-MM-DD | Short event title | 1–3 sentence context note for the hover tooltip | Wikipedia URL for this event
