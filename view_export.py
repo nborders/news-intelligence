@@ -548,6 +548,46 @@ function toggleAllSections() {{
   details.forEach(d => {{ d.open = !anyOpen; }});
   btn.textContent = anyOpen ? 'Expand all' : 'Collapse all';
 }}
+
+// ── Timeline hover tooltips ──────────────────────────────────────────────
+const _tlTip = document.getElementById('tl-tooltip');
+let _tlTimeout;
+
+function _showTlTip(row) {{
+  clearTimeout(_tlTimeout);
+  document.getElementById('tip-date').textContent  = row.dataset.tipDate  || '';
+  document.getElementById('tip-title').textContent = row.dataset.tipTitle || '';
+  document.getElementById('tip-note').textContent  = row.dataset.tipNote  || '';
+  document.getElementById('tip-link').href = row.dataset.tipUrl || '#';
+  _tlTip.style.display = 'block';
+
+  const r    = row.getBoundingClientRect();
+  const tipH = _tlTip.offsetHeight;
+  const tipW = 280;
+  let top  = r.top + window.scrollY - tipH - 4;
+  let left = r.left + window.scrollX;
+
+  // Clamp horizontally so tooltip never clips off screen
+  if (left + tipW > window.innerWidth - 12) left = window.innerWidth - tipW - 12;
+  left = Math.max(8, left);
+
+  // If tooltip would go above viewport, show below the row instead
+  if (top < window.scrollY + 8) top = r.bottom + window.scrollY + 4;
+
+  _tlTip.style.top  = top + 'px';
+  _tlTip.style.left = left + 'px';
+}}
+
+function _hideTlTip(delay) {{
+  _tlTimeout = setTimeout(() => {{ _tlTip.style.display = 'none'; }}, delay);
+}}
+
+document.querySelectorAll('.vtl-row[data-tip-title]').forEach(row => {{
+  row.addEventListener('mouseenter', () => _showTlTip(row));
+  row.addEventListener('mouseleave', () => _hideTlTip(300));
+}});
+_tlTip.addEventListener('mouseenter', () => clearTimeout(_tlTimeout));
+_tlTip.addEventListener('mouseleave', () => _hideTlTip(120));
 </script>
 """
 
@@ -1029,6 +1069,15 @@ def render_analysis(md_path: Path) -> Path:
 </head>
 <body>
 <div id="fn-tooltip"></div>
+<div id="tl-tooltip">
+  <div class="tip-date" id="tip-date"></div>
+  <div class="tip-title" id="tip-title"></div>
+  <div class="tip-note" id="tip-note"></div>
+  <a class="tip-link" id="tip-link" href="#" target="_blank" rel="noopener">
+    <svg width="11" height="11" viewBox="0 0 50 50" fill="none"><circle cx="25" cy="25" r="23" stroke="#6eadd4" stroke-width="2.5" fill="none"/><text x="8" y="34" font-family="Georgia,serif" font-size="27" fill="#6eadd4" font-weight="bold">W</text></svg>
+    Read on Wikipedia
+  </a>
+</div>
 {modal}
 <nav id="sidebar">
   <h2>Sections</h2>
