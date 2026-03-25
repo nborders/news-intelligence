@@ -2,11 +2,12 @@
 set -euo pipefail
 
 REPO_DIR="$(cd "$(dirname "$0")" && pwd)"
-PLIST_LABEL="com.nick.morning-brief"
+PLIST_LABEL="com.nick.daily-brief"
 PLIST_PATH="$HOME/Library/LaunchAgents/$PLIST_LABEL.plist"
+OLD_PLIST_PATH="$HOME/Library/LaunchAgents/com.nick.morning-brief.plist"
 LOG_PATH="$REPO_DIR/morning_brief.log"
 
-echo "=== Morning Brief — launchd installer ==="
+echo "=== Daily Brief — launchd installer ==="
 echo ""
 
 # ── Prerequisite checks ──────────────────────────────────────────────────────
@@ -79,12 +80,20 @@ cat > "$PLIST_PATH" <<PLIST
   </array>
 
   <key>StartCalendarInterval</key>
-  <dict>
-    <key>Hour</key>
-    <integer>6</integer>
-    <key>Minute</key>
-    <integer>0</integer>
-  </dict>
+  <array>
+    <dict>
+      <key>Hour</key>
+      <integer>6</integer>
+      <key>Minute</key>
+      <integer>0</integer>
+    </dict>
+    <dict>
+      <key>Hour</key>
+      <integer>16</integer>
+      <key>Minute</key>
+      <integer>30</integer>
+    </dict>
+  </array>
 
   <key>WorkingDirectory</key>
   <string>${REPO_DIR}</string>
@@ -113,12 +122,19 @@ echo "✓ plist written"
 
 # ── Register with launchctl ──────────────────────────────────────────────────
 
+# Remove old morning-brief job if it exists
+if [ -f "$OLD_PLIST_PATH" ]; then
+  launchctl unload "$OLD_PLIST_PATH" 2>/dev/null || true
+  rm "$OLD_PLIST_PATH"
+  echo "✓ removed old com.nick.morning-brief job"
+fi
+
 # Unload first if already registered (ignore error if not loaded)
 launchctl unload "$PLIST_PATH" 2>/dev/null || true
 launchctl load "$PLIST_PATH"
 
 echo "✓ registered with launchctl"
 echo ""
-echo "Done. Morning brief will run daily at 6:00am."
+echo "Done. Daily brief will run at 6:00am and 4:30pm."
 echo "To run manually at any time: python3 $REPO_DIR/run_daily.py"
 echo "To check logs: tail -f $LOG_PATH"

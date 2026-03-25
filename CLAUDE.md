@@ -61,11 +61,13 @@ Read each source with its bias in mind:
 
 ### Document header
 ```
-# Current Events Analysis — [DATE]
+# Current Events Analysis — [DATE] · [TIME]
 *Wikipedia-anchored briefing · Sources: wiki export + news export*
 
 ---
 ```
+
+`[DATE]` is today's date (e.g. `2026-03-24`). `[TIME]` is the current time in 12-hour format with am/pm (e.g. `6:00am` or `4:30pm`). The pipeline passes the current datetime in the prompt — use whatever time is given there. If no time is provided, use the file modification time or omit the time portion.
 
 ### Each section
 ```

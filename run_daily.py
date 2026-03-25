@@ -107,8 +107,15 @@ def run_claude() -> Path:
     # Snapshot existing analysis files before the run
     before = set(REPO_DIR.glob("analysis_*.md"))
 
+    now = datetime.now()
+    date_str = now.strftime("%Y-%m-%d")
+    time_str = now.strftime("%I:%M%p").lstrip("0").lower()  # "6:00am" / "4:30pm"
+    prompt = (
+        f"analyze the latest wiki and news exports. "
+        f"Today is {date_str} and the current time is {time_str}."
+    )
     ok, err = run(
-        [claude_bin, "--dangerously-skip-permissions", "-p", "analyze the latest wiki and news exports"],
+        [claude_bin, "--dangerously-skip-permissions", "-p", prompt],
         timeout=CLAUDE_TIMEOUT,
         stdin_devnull=True,
     )
@@ -161,17 +168,19 @@ def run_git_push() -> None:
     """
     Commit and push docs/index.html. Soft failure with macOS notification.
     """
-    date_str = datetime.now().strftime("%Y-%m-%d")
+    now = datetime.now()
+    date_str = now.strftime("%Y-%m-%d")
+    time_str = now.strftime("%I:%M%p").lstrip("0").lower()
 
     for cmd, label in [
         (["git", "add", "docs/index.html"], "git add"),
-        (["git", "commit", "-m", f"Daily brief {date_str}"], "git commit"),
+        (["git", "commit", "-m", f"Daily brief {date_str} {time_str}"], "git commit"),
         (["git", "push"], "git push"),
     ]:
         ok, err = run(cmd, timeout=30)
         if not ok:
             log(f"git: ERROR — {label} failed: {err}")
-            notify("Morning Brief", f"{label} failed — analysis is local only. Check morning_brief.log.")
+            notify("Daily Brief", f"{label} failed — analysis is local only. Check morning_brief.log.")
             return
 
     log("git: pushed to origin/main")
