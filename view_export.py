@@ -38,6 +38,7 @@ SCRIPT_DIR = Path(__file__).parent.resolve()
 # ─── Shared CSS ────────────────────────────────────────────────────────────────
 
 CSS = """
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600&display=swap');
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 /* ── Night mode / earth tone palette ──────────────────────────────────────
@@ -52,9 +53,10 @@ CSS = """
    ──────────────────────────────────────────────────────────────────────── */
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family: Lexend, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   background: #1a1714; color: #e8dfc8; font-size: 19px; line-height: 2.0;
-  letter-spacing: 0.01em;
+  letter-spacing: 0.12em;
+  word-spacing: 0.16em;
 }
 
 /* ── Sidebar ──────────────────────────────────────────────────────────── */
