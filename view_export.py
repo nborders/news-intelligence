@@ -279,6 +279,59 @@ em { font-style: italic; }
   .masthead { padding: 28px 0 20px; }
   .masthead h1 { font-size: 26px; }
 }
+
+/* ── Collapsible sections ─────────────────────────────────────────────── */
+details { margin-bottom: 0; }
+details + hr { margin-top: 0; }
+
+summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 0.3rem 0;
+  user-select: none;
+}
+summary::-webkit-details-marker { display: none; }
+
+summary h2 {
+  display: inline;
+  margin-top: 0;
+}
+
+summary .subtitle {
+  display: block;
+  color: #8a7f6a;
+  font-size: 0.88em;
+  font-style: italic;
+  margin-top: 0.2rem;
+  margin-bottom: 0;
+  letter-spacing: 0.06em;
+}
+
+summary::after {
+  content: ' ▾';
+  color: #8a7f6a;
+  font-size: 0.75em;
+  vertical-align: middle;
+}
+details:not([open]) summary::after { content: ' ▸'; }
+
+.section-body { padding-top: 0.6rem; }
+
+/* ── Collapse/expand toggle button ───────────────────────────────────── */
+.toggle-btn {
+  display: inline-block;
+  margin: 0.8rem 0 1.6rem;
+  padding: 0.35rem 0.9rem;
+  background: #242019;
+  border: 1px solid #3a342e;
+  border-radius: 4px;
+  color: #8a7f6a;
+  font-size: 0.8rem;
+  font-family: inherit;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+}
+.toggle-btn:hover { background: #2e2820; color: #c98a2e; border-color: #c98a2e; }
 """
 
 # ─── JavaScript ───────────────────────────────────────────────────────────────
@@ -363,6 +416,15 @@ _modal.addEventListener('click', e => {{
 document.addEventListener('keydown', e => {{
   if (e.key === 'Escape') closeMedia();
 }});
+
+// ── Collapse / expand all sections ──────────────────────────────────────
+function toggleAllSections() {{
+  const details = document.querySelectorAll('details');
+  const btn = document.getElementById('toggle-all-btn');
+  const anyOpen = Array.from(details).some(d => d.open);
+  details.forEach(d => {{ d.open = !anyOpen; }});
+  btn.textContent = anyOpen ? 'Expand all' : 'Collapse all';
+}}
 </script>
 """
 
@@ -472,6 +534,68 @@ def inline_md(text: str, fn_defs: dict) -> str:
                   lambda m: f'<em>{m.group(1) or m.group(2)}</em>', text)
 
     return text
+
+
+def wrap_sections(body_html: list[str]) -> list[str]:
+    """
+    Post-processing pass: wrap each <h2> section in <details><summary>.
+    The <h2> and its optional <p class="subtitle"> go inside <summary>.
+    Everything up to the next <h2> or footnotes block goes in <div class="section-body">.
+    The footnotes block (starts with <div class="footnotes">) is left untouched.
+    """
+    result = []
+    i = 0
+    while i < len(body_html):
+        item = body_html[i]
+
+        # Don't wrap footnotes block
+        if item.startswith('<div class="footnotes"'):
+            result.append(item)
+            i += 1
+            continue
+
+        # Section heading — start a <details> block
+        if item.startswith('<h2 '):
+            summary_parts = [item]
+            i += 1
+
+            # Optional subtitle immediately following
+            if i < len(body_html) and '<p class="subtitle">' in body_html[i]:
+                summary_parts.append(body_html[i])
+                i += 1
+
+            # Collect body until next h2 or footnotes
+            body_parts = []
+            while i < len(body_html):
+                next_item = body_html[i]
+                if (next_item.startswith('<h2 ')
+                        or next_item.startswith('<div class="footnotes"')):
+                    break
+                body_parts.append(next_item)
+                i += 1
+
+            # Strip trailing <hr> from body (it belongs between sections, not inside)
+            result_hr = False
+            while body_parts and body_parts[-1] == '<hr>':
+                body_parts.pop()
+                result_hr = True
+
+            summary_html = '\n'.join(summary_parts)
+            body_html_str = '\n'.join(body_parts)
+            result.append(
+                f'<details open>\n'
+                f'<summary>\n{summary_html}\n</summary>\n'
+                f'<div class="section-body">\n{body_html_str}\n</div>\n'
+                f'</details>'
+            )
+            if result_hr:
+                result.append('<hr>')
+            continue
+
+        result.append(item)
+        i += 1
+
+    return result
 
 
 def render_analysis(md_path: Path) -> Path:
@@ -608,6 +732,7 @@ def render_analysis(md_path: Path) -> Path:
 
     flush_paragraph()
     body_html = [x for x in body_html if x != "__SUBTITLE_SLOT__"]
+    body_html = wrap_sections(body_html)
 
     # ── Build footnotes section ──
     if fn_defs:
@@ -633,6 +758,7 @@ def render_analysis(md_path: Path) -> Path:
     masthead = f"""<div class="masthead">
   <h1>{html.escape(page_title)}</h1>
   {'<p class="meta">' + html.escape(meta_line) + '</p>' if meta_line else ''}
+  <button class="toggle-btn" id="toggle-all-btn" onclick="toggleAllSections()">Collapse all</button>
 </div>"""
 
     modal = """
