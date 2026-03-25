@@ -105,17 +105,38 @@ Claude writes timelines as a fenced code block with the language tag `timeline`.
 
 ## Rendering — `view_export.py` Changes
 
-### 1. Fenced block detection in `render_markdown()`
+### 1. Fenced block detection in `render_analysis()`
 
-When the renderer encounters a fenced block whose language tag starts with `timeline`, instead of emitting a `<pre><code>` block it calls `render_timeline(header, lines)`.
+`view_export.py` does not currently have a fenced code block state machine — triple-backtick lines are treated as paragraph text. This feature requires adding one to `render_analysis()`.
 
-The existing fenced block handler already has `code_lang = line[3:].strip()` — add a branch:
+Add a state machine to the rendering loop that tracks `in_code_block`, `code_lang`, and `code_buf`. When a closing ` ``` ` is reached:
+- If `code_lang.startswith('timeline')`: call `render_timeline(code_lang, code_buf)` and append the result
+- Otherwise: emit a standard `<pre><code>` block
 
 ```python
-if code_lang.startswith('timeline'):
-    out.append(render_timeline(code_lang, code_buf))
-else:
-    # existing <pre><code> path
+# New state variables in render_analysis() loop
+in_code_block = False
+code_lang = ""
+code_buf = []
+
+# On encountering a line starting with ```
+if line.startswith("```"):
+    if not in_code_block:
+        in_code_block = True
+        code_lang = line[3:].strip()
+        code_buf = []
+    else:
+        in_code_block = False
+        if code_lang.startswith('timeline'):
+            body_html.append(render_timeline(code_lang, code_buf))
+        else:
+            code_text = html.escape("\n".join(code_buf))
+            body_html.append(f'<pre><code>{code_text}</code></pre>')
+    continue
+
+if in_code_block:
+    code_buf.append(line)
+    continue
 ```
 
 ### 2. `render_timeline(lang_line, lines)` function
@@ -144,7 +165,18 @@ New rules for: `.tl-box`, `.tl-box-header`, `.tl-box-label`, `.tl-wiki`, `.vtl` 
 
 Add once, after `<div id="fn-tooltip">`:
 ```html
-<div id="tl-tooltip"><div class="tip-date" id="tip-date"></div>...Wikipedia link...</div>
+<div id="tl-tooltip">
+  <div class="tip-date" id="tip-date"></div>
+  <div class="tip-title" id="tip-title"></div>
+  <div class="tip-note" id="tip-note"></div>
+  <a class="tip-link" id="tip-link" href="#" target="_blank" rel="noopener">
+    <svg width="11" height="11" viewBox="0 0 50 50" fill="none">
+      <circle cx="25" cy="25" r="23" stroke="#6eadd4" stroke-width="2.5" fill="none"/>
+      <text x="8" y="34" font-family="Georgia,serif" font-size="27" fill="#6eadd4" font-weight="bold">W</text>
+    </svg>
+    Read on Wikipedia
+  </a>
+</div>
 ```
 
 ### 5. JS additions in `build_js()`
