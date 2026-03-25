@@ -25,6 +25,7 @@ No dependencies beyond the standard library.
 """
 
 import argparse
+import datetime
 import html
 import json
 import re
@@ -534,6 +535,98 @@ def inline_md(text: str, fn_defs: dict) -> str:
                   lambda m: f'<em>{m.group(1) or m.group(2)}</em>', text)
 
     return text
+
+
+def render_timeline(lang_line: str, lines: list[str]) -> str:
+    """
+    Render a ```timeline fenced block as HTML.
+
+    lang_line : full language tag, e.g.
+                "timeline 2026 Iran war | https://en.wikipedia.org/wiki/..."
+    lines     : entry lines, each "YYYY-MM-DD | title | note | url"
+    Returns   : .tl-box HTML string ready to append to body_html.
+    """
+    # ── Parse header ──────────────────────────────────────────────────────
+    header = lang_line[len("timeline"):].strip()
+    parts = header.split(" | ", 1)
+    article_name = parts[0].strip() if parts else "Timeline"
+    wiki_url = parts[1].strip() if len(parts) > 1 else ""
+
+    today_str = datetime.date.today().isoformat()  # "2026-03-24"
+
+    # ── W icon SVG (matches tooltip link style) ───────────────────────────
+    def w_svg(color: str) -> str:
+        return (
+            f'<svg width="13" height="13" viewBox="0 0 50 50" fill="none">'
+            f'<circle cx="25" cy="25" r="23" stroke="{color}" stroke-width="2.5" fill="none"/>'
+            f'<text x="8" y="34" font-family="Georgia,serif" font-size="27" '
+            f'fill="{color}" font-weight="bold">W</text></svg>'
+        )
+
+    # ── Build rows ────────────────────────────────────────────────────────
+    rows_html = []
+    for raw in lines:
+        if not raw.strip():
+            continue
+        fields = raw.split(" | ", 3)
+        if len(fields) < 2:
+            continue
+        date_str  = fields[0].strip()
+        title     = fields[1].strip()
+        note      = fields[2].strip() if len(fields) > 2 else ""
+        entry_url = fields[3].strip() if len(fields) > 3 else wiki_url
+
+        is_today = date_str == today_str
+
+        # Short display date: "Feb 13" or "Mar 24 ◀"
+        # Note: use d.day (not %-d) — %-d is Linux-only, fails on macOS BSD strftime
+        try:
+            d = datetime.date.fromisoformat(date_str)
+            short = f"{d.strftime('%b')} {d.day}"
+            full  = f"{d.strftime('%B')} {d.day}, {d.year}"
+        except ValueError:
+            short = full = date_str
+
+        if is_today:
+            short += " ◀"
+            full  += " · Today"
+
+        row_class = "vtl-row today" if is_today else "vtl-row"
+        rows_html.append(
+            f'<div class="{row_class}"'
+            f' data-tip-date="{html.escape(full)}"'
+            f' data-tip-title="{html.escape(title)}"'
+            f' data-tip-note="{html.escape(note)}"'
+            f' data-tip-url="{html.escape(entry_url)}">'
+            f'<div class="vtl-date">{html.escape(short)}</div>'
+            f'<div class="vtl-dot"></div>'
+            f'<div class="vtl-event">{html.escape(title)}</div>'
+            f'</div>'
+        )
+
+    # ── Wikipedia header link ─────────────────────────────────────────────
+    wiki_link = ""
+    if wiki_url:
+        wiki_link = (
+            f'<a class="tl-wiki" href="{html.escape(wiki_url)}"'
+            f' target="_blank" rel="noopener">'
+            f'{w_svg("#8a7f6a")}'
+            f'<span>{html.escape(article_name)}</span>'
+            f'</a>'
+        )
+
+    rows = "\n".join(rows_html)
+    return (
+        f'<div class="tl-box">\n'
+        f'<div class="tl-box-header">\n'
+        f'<span class="tl-box-label">Timeline · {html.escape(article_name)}</span>\n'
+        f'{wiki_link}\n'
+        f'</div>\n'
+        f'<div class="vtl">\n'
+        f'{rows}\n'
+        f'</div>\n'
+        f'</div>'
+    )
 
 
 def wrap_sections(items: list[str]) -> list[str]:
