@@ -308,12 +308,12 @@ summary .subtitle {
 }
 
 summary::after {
-  content: ' ▾';
+  content: ' ▸';
   color: #8a7f6a;
   font-size: 0.75em;
   vertical-align: middle;
 }
-details:not([open]) summary::after { content: ' ▸'; }
+details[open] summary::after { content: ' ▾'; }
 
 .section-body { padding-top: 0.6rem; }
 
@@ -536,7 +536,7 @@ def inline_md(text: str, fn_defs: dict) -> str:
     return text
 
 
-def wrap_sections(body_html: list[str]) -> list[str]:
+def wrap_sections(items: list[str]) -> list[str]:
     """
     Post-processing pass: wrap each <h2> section in <details><summary>.
     The <h2> and its optional <p class="subtitle"> go inside <summary>.
@@ -545,8 +545,8 @@ def wrap_sections(body_html: list[str]) -> list[str]:
     """
     result = []
     i = 0
-    while i < len(body_html):
-        item = body_html[i]
+    while i < len(items):
+        item = items[i]
 
         # Don't wrap footnotes block
         if item.startswith('<div class="footnotes"'):
@@ -560,14 +560,14 @@ def wrap_sections(body_html: list[str]) -> list[str]:
             i += 1
 
             # Optional subtitle immediately following
-            if i < len(body_html) and '<p class="subtitle">' in body_html[i]:
-                summary_parts.append(body_html[i])
+            if i < len(items) and '<p class="subtitle">' in items[i]:
+                summary_parts.append(items[i])
                 i += 1
 
             # Collect body until next h2 or footnotes
             body_parts = []
-            while i < len(body_html):
-                next_item = body_html[i]
+            while i < len(items):
+                next_item = items[i]
                 if (next_item.startswith('<h2 ')
                         or next_item.startswith('<div class="footnotes"')):
                     break
@@ -581,11 +581,11 @@ def wrap_sections(body_html: list[str]) -> list[str]:
                 result_hr = True
 
             summary_html = '\n'.join(summary_parts)
-            body_html_str = '\n'.join(body_parts)
+            body_str = '\n'.join(body_parts)
             result.append(
                 f'<details open>\n'
                 f'<summary>\n{summary_html}\n</summary>\n'
-                f'<div class="section-body">\n{body_html_str}\n</div>\n'
+                f'<div class="section-body">\n{body_str}\n</div>\n'
                 f'</details>'
             )
             if result_hr:
