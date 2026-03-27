@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Current Events Analysis — 2026-03-26 · 6:00pm</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📰</text></svg>">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800;900&display=swap');
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ── Night mode / earth tone palette ──────────────────────────────────────
+   Background : #1a1714  (very dark warm brown — like a dim reading lamp)
+   Surface    : #242019  (slightly lighter, for callout boxes)
+   Text       : #e8dfc8  (warm cream — high contrast, not harsh white)
+   Muted      : #8a7f6a  (earth mid-tone for labels/meta)
+   Amber      : #c98a2e  (heading accent)
+   Rust       : #b84a2a  (WATCH callout)
+   Sage       : #7a9a40  (ABSURD/humor callout)
+   Sky        : #6eadd4  (links — readable blue on dark)
+   ──────────────────────────────────────────────────────────────────────── */
+
+body {
+  font-family: Lexend, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #1a1714; color: #e8dfc8; font-size: 19px; line-height: 2.0;
+  letter-spacing: 0.12em;
+  word-spacing: 0.16em;
+}
+
+/* ── Sidebar ──────────────────────────────────────────────────────────── */
+#sidebar {
+  position: fixed; top: 0; left: 0; bottom: 0; width: 256px;
+  background: #100e0c; color: #b8aa90; overflow-y: auto; padding: 20px 0;
+  border-right: 1px solid #302820;
+}
+#sidebar h2 {
+  font-size: 10px; text-transform: uppercase; letter-spacing: .12em;
+  color: #5a5040; padding: 0 18px 10px;
+}
+#sidebar a {
+  display: block; padding: 7px 18px; color: #b8aa90;
+  text-decoration: none; font-size: 13px; line-height: 1.5;
+  border-left: 4px solid transparent;
+}
+#sidebar a:hover { background: #1e1a14; border-left-color: #c98a2e; color: #e8dfc8; }
+#sidebar .section-link { font-weight: 700; margin-top: 8px; }
+#sidebar .sub-link { padding-left: 30px; color: #7a6e58; font-size: 12px; }
+
+/* ── Main content ─────────────────────────────────────────────────────── */
+#main { margin-left: 256px; padding: 0 56px 64px; max-width: 820px; }
+
+/* ── Masthead (h1 + meta) — visually separate from all other content ── */
+.masthead {
+  padding: 44px 0 28px;
+  border-bottom: 3px solid #c98a2e;
+  margin-bottom: 48px;
+}
+.masthead h1 {
+  font-size: 38px; font-weight: 900; color: #f5ecd5;
+  line-height: 1.15; letter-spacing: -0.02em;
+  text-shadow: 0 1px 8px rgba(0,0,0,.4);
+}
+/* Decorative rule above the title */
+.masthead::before {
+  content: "";
+  display: block;
+  width: 56px; height: 4px;
+  background: #c98a2e;
+  border-radius: 2px;
+  margin-bottom: 18px;
+}
+.masthead .meta {
+  color: #8a7f6a; font-size: 14px; margin-top: 10px; line-height: 1.6;
+  letter-spacing: 0.03em; text-transform: uppercase;
+}
+.masthead .rendered-at {
+  font-size: 11px; color: #5a5248; margin-top: 4px; text-transform: none; letter-spacing: 0.02em;
+}
+
+/* Legacy .meta outside masthead */
+.meta { color: #8a7f6a; font-size: 14px; margin-bottom: 36px; line-height: 1.6; }
+
+/* Section headings: dark amber left-bar on a warm surface */
+h2 {
+  font-size: 22px; font-weight: 800; margin: 48px 0 4px;
+  padding: 10px 16px; color: #f0dfb0;
+  background: #231f18;
+  border-left: 6px solid #c98a2e;
+  border-radius: 0 6px 6px 0;
+  line-height: 1.35;
+}
+/* Subtitle: muted descriptor immediately after h2 */
+.subtitle {
+  font-size: 15px; color: #8a7f6a; font-style: italic;
+  margin: 4px 0 20px 22px; line-height: 1.5;
+}
+
+h3 {
+  font-size: 18px; font-weight: 700; margin: 28px 0 8px;
+  color: #d4b87a;
+}
+p { margin-bottom: 18px; }
+hr { border: none; border-top: 1px solid #302820; margin: 36px 0; }
+a { color: #6eadd4; }
+a:hover { text-decoration: underline; color: #9ac8e8; }
+sup a {
+  color: #c98a2e; font-size: 12px; font-weight: 700;
+  text-decoration: none; padding: 0 2px;
+}
+sup a:hover { text-decoration: underline; color: #e8a84e; }
+
+/* ── Inline images ────────────────────────────────────────────────────── */
+figure.inline-img {
+  margin: 24px 0; border-radius: 8px; overflow: hidden;
+  background: #100e0c; border: 1px solid #302820;
+}
+figure.inline-img img {
+  display: block; width: 100%; max-height: 420px;
+  object-fit: cover; object-position: top;
+}
+figure.inline-img figcaption {
+  font-size: 13px; color: #8a7f6a; padding: 8px 14px;
+  font-style: italic; line-height: 1.5;
+}
+
+/* ── Video / audio buttons ────────────────────────────────────────────── */
+.watch-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: #1e1a14; border: 1px solid #5a4a2a;
+  color: #c98a2e; font-size: 14px; font-weight: 600;
+  padding: 7px 14px; border-radius: 6px; cursor: pointer;
+  text-decoration: none; transition: background .15s, border-color .15s;
+  margin: 4px 0;
+}
+.watch-btn:hover {
+  background: #2a2010; border-color: #c98a2e; color: #e8b84e;
+  text-decoration: none;
+}
+.watch-btn .btn-icon { font-size: 16px; }
+
+/* ── Video modal ──────────────────────────────────────────────────────── */
+#video-modal {
+  display: none; position: fixed; inset: 0; z-index: 9000;
+  background: rgba(0,0,0,.82);
+  align-items: center; justify-content: center;
+}
+#video-modal.open { display: flex; }
+.modal-box {
+  position: relative; width: 854px; max-width: 92vw;
+  border-radius: 10px; overflow: hidden;
+  background: #0a0806; border: 1px solid #302820;
+  box-shadow: 0 24px 80px rgba(0,0,0,.8);
+}
+.modal-box .ratio { position: relative; padding-top: 56.25%; }
+.modal-box iframe, .modal-box audio {
+  position: absolute; inset: 0; width: 100%; height: 100%; border: none;
+}
+.modal-box audio { height: auto; top: auto; bottom: 0; padding: 20px; }
+.modal-close {
+  position: absolute; top: 10px; right: 12px; z-index: 10;
+  background: rgba(0,0,0,.6); color: #e8dfc8; border: none;
+  font-size: 20px; width: 34px; height: 34px; border-radius: 50%;
+  cursor: pointer; line-height: 34px; text-align: center;
+  transition: background .15s;
+}
+.modal-close:hover { background: rgba(201,138,46,.4); }
+
+/* ── Callout boxes ────────────────────────────────────────────────────── */
+
+/* Standard blockquote — muted context */
+blockquote {
+  border-left: 5px solid #4a6a8a; margin: 18px 0;
+  padding: 10px 20px; background: #1e2028; color: #b0c0d0;
+  font-style: italic; border-radius: 0 6px 6px 0;
+}
+
+/* KEY POINT — amber, "you should notice this" */
+blockquote.key-point {
+  border-left-color: #c98a2e; background: #2a2010;
+  color: #f0dfb0; font-style: normal; font-size: 18px;
+}
+blockquote.key-point strong.label {
+  display: block; font-size: 11px; text-transform: uppercase;
+  letter-spacing: .12em; color: #c98a2e; margin-bottom: 6px;
+}
+
+/* WATCH — rust red, "this matters more than coverage suggests" */
+blockquote.watch {
+  border-left-color: #b84a2a; background: #271410;
+  color: #f0cfc0; font-style: normal;
+}
+blockquote.watch strong.label {
+  display: block; font-size: 11px; text-transform: uppercase;
+  letter-spacing: .12em; color: #d0603a; margin-bottom: 6px;
+}
+
+/* ABSURD — sage green, humor */
+blockquote.absurd {
+  border-left-color: #7a9a40; background: #1a2010;
+  color: #cce0a8; font-style: normal;
+}
+blockquote.absurd strong.label {
+  display: block; font-size: 11px; text-transform: uppercase;
+  letter-spacing: .12em; color: #7a9a40; margin-bottom: 6px;
+}
+
+/* ── Footnotes ────────────────────────────────────────────────────────── */
+.footnotes {
+  margin-top: 48px; padding-top: 24px; border-top: 1px solid #302820;
+}
+.footnotes h2 {
+  border: none; margin-top: 0; font-size: 13px; color: #5a5040;
+  background: none; padding: 0; letter-spacing: .08em; text-transform: uppercase;
+}
+.footnotes ol { padding-left: 22px; margin-top: 12px; }
+.footnotes li {
+  font-size: 14px; color: #8a7f6a; margin-bottom: 8px;
+  padding-left: 4px; line-height: 1.6;
+}
+.footnotes li a { color: #6eadd4; }
+.backref {
+  font-size: 12px; margin-left: 8px;
+  text-decoration: none !important; color: #5a5040;
+}
+.backref:hover { color: #c98a2e; }
+strong { font-weight: 700; }
+em { font-style: italic; }
+
+/* ── Footnote hover tooltip ───────────────────────────────────────────── */
+#fn-tooltip {
+  display: none; position: absolute;
+  background: #1e1a10; border: 1px solid #c98a2e;
+  color: #f0dfb0; padding: 7px 14px;
+  border-radius: 6px; font-size: 13px; font-style: normal;
+  white-space: nowrap; max-width: 520px;
+  overflow: hidden; text-overflow: ellipsis;
+  z-index: 8000; pointer-events: auto;
+  box-shadow: 0 4px 20px rgba(0,0,0,.6);
+  line-height: 1.5;
+}
+#fn-tooltip a { color: #c98a2e; text-decoration: none; }
+#fn-tooltip a:hover { text-decoration: underline; color: #e8a84e; }
+#fn-tooltip .tip-num {
+  font-weight: 700; color: #8a7f6a; margin-right: 6px;
+}
+
+@media (max-width: 760px) {
+  #sidebar { display: none; }
+  #main { margin-left: 0; padding: 24px 20px 64px; }
+  .masthead { padding: 28px 0 20px; }
+  .masthead h1 { font-size: 26px; }
+}
+
+/* ── Collapsible sections ─────────────────────────────────────────────── */
+details { margin-bottom: 0; }
+details + hr { margin-top: 0; }
+
+summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 0.3rem 0;
+  user-select: none;
+}
+summary::-webkit-details-marker { display: none; }
+
+summary h2 {
+  display: inline;
+  margin-top: 0;
+}
+
+summary .subtitle {
+  display: block;
+  color: #8a7f6a;
+  font-size: 0.88em;
+  font-style: italic;
+  margin-top: 0.2rem;
+  margin-bottom: 0;
+  letter-spacing: 0.06em;
+}
+
+summary::after {
+  content: ' ▸';
+  color: #8a7f6a;
+  font-size: 0.75em;
+  vertical-align: middle;
+}
+details[open] summary::after { content: ' ▾'; }
+
+.section-body { padding-top: 0.6rem; }
+
+/* ── Collapse/expand toggle button ───────────────────────────────────── */
+.toggle-btn {
+  display: inline-block;
+  margin: 0.8rem 0 1.6rem;
+  padding: 0.35rem 0.9rem;
+  background: #242019;
+  border: 1px solid #3a342e;
+  border-radius: 4px;
+  color: #8a7f6a;
+  font-size: 0.8rem;
+  font-family: inherit;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+}
+.toggle-btn:hover { background: #2e2820; color: #c98a2e; border-color: #c98a2e; }
+
+/* ── Event timelines ──────────────────────────────────────────────────── */
+.tl-box {
+  border: 1px solid #3a342e;
+  border-radius: 4px;
+  background: #211e1a;
+  padding: 12px;
+  margin-top: 12px;
+}
+.tl-box-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+.tl-box-label {
+  color: #8a7f6a;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+.tl-wiki {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  text-decoration: none;
+}
+.tl-wiki span { font-size: 10px; color: #6eadd4; }
+.tl-wiki:hover span { text-decoration: underline; }
+
+.vtl { position: relative; padding-left: 76px; }
+.vtl::before {
+  content: '';
+  position: absolute;
+  left: 65px; top: 6px; bottom: 6px;
+  width: 1px;
+  background: #3a342e;
+}
+.vtl-row {
+  position: relative;
+  margin-bottom: 10px;
+  padding-left: 14px;
+  cursor: default;
+}
+.vtl-row:last-child { margin-bottom: 0; }
+.vtl-date {
+  position: absolute;
+  left: -76px;
+  width: 62px;
+  text-align: right;
+  font-size: 10px;
+  color: #8a7f6a;
+  line-height: 1.6;
+  padding-top: 1px;
+}
+.vtl-dot {
+  position: absolute;
+  left: -5px; top: 5px;
+  width: 9px; height: 9px;
+  border-radius: 50%;
+  background: #3a342e;
+  border: 1px solid #4a4438;
+  transition: background 0.12s, border-color 0.12s;
+}
+.vtl-row[data-tip-title]:hover .vtl-dot { background: #6eadd4; border-color: #6eadd4; }
+.vtl-event {
+  font-size: 11px;
+  color: #c8bfa8;
+  line-height: 1.6;
+  transition: color 0.12s;
+}
+.vtl-row[data-tip-title]:hover .vtl-event { color: #e8dfc8; }
+.vtl-row.today .vtl-date { color: #c98a2e; font-weight: 600; }
+.vtl-row.today .vtl-dot {
+  background: #c98a2e; border-color: #c98a2e;
+  width: 11px; height: 11px;
+  left: -6px; top: 4px;
+}
+.vtl-row.today .vtl-event { color: #e8dfc8; font-weight: 600; }
+.vtl-row.today[data-tip-title]:hover .vtl-dot { background: #e09030; border-color: #e09030; }
+
+/* ── Timeline hover tooltip ───────────────────────────────────────────── */
+#tl-tooltip {
+  display: none;
+  position: absolute;
+  z-index: 9999;
+  width: 280px;
+  background: #1e1a10;
+  border: 1px solid #c98a2e;
+  border-radius: 5px;
+  padding: 12px 14px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.65);
+  pointer-events: auto;
+  font-size: 13px;
+  line-height: 1.5;
+}
+/* Invisible bridge fills gap between tooltip bottom and row so mouse
+   can travel to the tooltip without triggering the hide timer. */
+#tl-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 0; right: 0;
+  height: 14px;
+}
+.tip-date  { font-size: 10px; color: #8a7f6a; letter-spacing: 0.06em; margin-bottom: 4px; }
+.tip-title { font-size: 12px; color: #e8dfc8; font-weight: 600; line-height: 1.4; margin-bottom: 6px; }
+.tip-note  { font-size: 11px; color: #b8b0a0; line-height: 1.5; margin-bottom: 10px; }
+.tip-link  {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 10px;
+  color: #6eadd4;
+  text-decoration: none;
+  border: 1px solid #3a342e;
+  border-radius: 3px;
+  padding: 4px 10px;
+  background: #2a2520;
+  transition: border-color 0.12s, color 0.12s;
+}
+.tip-link:hover { border-color: #6eadd4; color: #8ac8e8; }
+</style>
+</head>
+<body>
+<div id="fn-tooltip"></div>
+<div id="tl-tooltip">
+  <div class="tip-date" id="tip-date"></div>
+  <div class="tip-title" id="tip-title"></div>
+  <div class="tip-note" id="tip-note"></div>
+  <a class="tip-link" id="tip-link" href="#" target="_blank" rel="noopener">
+    <svg width="11" height="11" viewBox="0 0 50 50" fill="none"><circle cx="25" cy="25" r="23" stroke="#6eadd4" stroke-width="2.5" fill="none"/><text x="8" y="34" font-family="Georgia,serif" font-size="27" fill="#6eadd4" font-weight="bold">W</text></svg>
+    Read on Wikipedia
+  </a>
+</div>
+
+<div id="video-modal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeMedia()">✕</button>
+    <div class="ratio">
+      <iframe id="modal-iframe" src="" allowfullscreen allow="autoplay"></iframe>
+      <audio id="modal-audio" src="" controls style="display:none"></audio>
+    </div>
+  </div>
+</div>
+<nav id="sidebar">
+  <h2>Sections</h2>
+  <a class="section-link" href="#2026-iran-war-the-naval-command-dismantled">2026 Iran War — The Naval Command Dismantled</a>
+<a class="section-link" href="#russia-the-iran-war-is-fixing-the-budget-cementing-the-occupation">Russia — The Iran War Is Fixing the Budget; Cementing the Occupation</a>
+<a class="section-link" href="#russia-s-information-siege-synchronized-delete-telegram-articles-nationwide">Russia&#x27;s Information Siege — Synchronized &quot;Delete Telegram&quot; Articles Nationwide</a>
+<a class="section-link" href="#other-consequential-events">Other Consequential Events</a>
+<a class="section-link" href="#science-discovery">Science &amp; Discovery</a>
+<a class="section-link" href="#dispatch-from-the-absurd">Dispatch from the Absurd</a>
+</nav>
+<div id="main">
+  <div class="masthead">
+  <h1>Current Events Analysis — 2026-03-26 · 6:00pm</h1>
+  <p class="meta">Wikipedia-anchored briefing · Sources: wiki export + news export</p>
+  <p class="meta rendered-at">Rendered March 26, 2026 · 6:13pm</p>
+  <button class="toggle-btn" id="toggle-all-btn" onclick="toggleAllSections()">Collapse all</button>
+</div>
+  <p><em>Wikipedia-anchored briefing · Sources: wiki export + news export</em></p><hr><details open>
+<summary>
+<h2 id="2026-iran-war-the-naval-command-dismantled">2026 Iran War — The Naval Command Dismantled</h2>
+<p class="subtitle">Three IRGC naval commanders dead this week; diplomatic channel confirmed; the toll road persists</p>
+</summary>
+<div class="section-body">
+<div class="tl-box">
+<div class="tl-box-header">
+<span class="tl-box-label">Timeline · 2026 Iran war</span>
+<a class="tl-wiki" href="https://en.wikipedia.org/wiki/2026_Iran_war" target="_blank" rel="noopener"><svg width="13" height="13" viewBox="0 0 50 50" fill="none"><circle cx="25" cy="25" r="23" stroke="#8a7f6a" stroke-width="2.5" fill="none"/><text x="8" y="34" font-family="Georgia,serif" font-size="27" fill="#8a7f6a" font-weight="bold">W</text></svg><span>2026 Iran war</span></a>
+</div>
+<div class="vtl">
+<div class="vtl-row" data-tip-date="February 13, 2026" data-tip-title="US–Israel air campaign begins" data-tip-note="After Iran&#x27;s missile barrage strikes Haifa&#x27;s port district, US and Israeli air forces launch coordinated strikes on IRGC infrastructure across western Iran." data-tip-url="https://en.wikipedia.org/wiki/2026_Iran_war"><div class="vtl-date">Feb 13</div><div class="vtl-dot"></div><div class="vtl-event">US–Israel air campaign begins</div></div>
+<div class="vtl-row" data-tip-date="February 19, 2026" data-tip-title="Iran threatens Hormuz closure" data-tip-note="IRGC naval command announces it will mine the strait if strikes continue. Oil surges past $112/barrel. US Fifth Fleet repositions two carrier groups." data-tip-url="https://en.wikipedia.org/wiki/Strait_of_Hormuz"><div class="vtl-date">Feb 19</div><div class="vtl-dot"></div><div class="vtl-event">Iran threatens Hormuz closure</div></div>
+<div class="vtl-row" data-tip-date="March 4, 2026" data-tip-title="Bushehr nuclear plant hit" data-tip-note="Israeli strikes disable the reactor&#x27;s cooling systems. IAEA calls an emergency session. Iranian state media reports elevated radiation in Bushehr province." data-tip-url="https://en.wikipedia.org/wiki/Bushehr_Nuclear_Power_Plant"><div class="vtl-date">Mar 4</div><div class="vtl-dot"></div><div class="vtl-event">Bushehr nuclear plant hit</div></div>
+<div class="vtl-row" data-tip-date="March 17, 2026" data-tip-title="Ali Larijani killed" data-tip-note="IDF strike kills SNSC Secretary Ali Larijani in Tehran. Former IRGC deputy commander takes over, deepening IRGC control of Iran&#x27;s security decision-making." data-tip-url="https://en.wikipedia.org/wiki/Ali_Larijani"><div class="vtl-date">Mar 17</div><div class="vtl-dot"></div><div class="vtl-event">Ali Larijani killed</div></div>
+<div class="vtl-row" data-tip-date="March 21, 2026" data-tip-title="Trump&#x27;s 48-hour ultimatum; Natanz struck" data-tip-note="Trump demands Iran fully reopen Hormuz or US will obliterate Iran&#x27;s power grid. US and Israeli jets strike Natanz. Iran fires two IRBMs at Diego Garcia; both fail to hit." data-tip-url="https://en.wikipedia.org/wiki/Natanz_nuclear_facility"><div class="vtl-date">Mar 21</div><div class="vtl-dot"></div><div class="vtl-event">Trump&#x27;s 48-hour ultimatum; Natanz struck</div></div>
+<div class="vtl-row" data-tip-date="March 23, 2026" data-tip-title="Deadline extended; Brent crude drops 11%" data-tip-note="After &quot;very good conversations,&quot; Trump postpones the ultimatum 5 days. Iran publicly denies talks are happening. Brent crude falls below $100/barrel for the first time in days." data-tip-url="https://en.wikipedia.org/wiki/2026_Iran_war"><div class="vtl-date">Mar 23</div><div class="vtl-dot"></div><div class="vtl-event">Deadline extended; Brent crude drops 11%</div></div>
+<div class="vtl-row" data-tip-date="March 24, 2026" data-tip-title="US delivers 15-point peace plan" data-tip-note="NYT reports the US delivered a 15-point peace plan through Pakistani intermediaries. Trump declares &quot;we&#x27;ve won this war.&quot; Lebanon expels Iran&#x27;s ambassador. Israel says the war needs several more weeks." data-tip-url="https://en.wikipedia.org/wiki/2026_Iran_war"><div class="vtl-date">Mar 24</div><div class="vtl-dot"></div><div class="vtl-event">US delivers 15-point peace plan</div></div>
+<div class="vtl-row" data-tip-date="March 25, 2026" data-tip-title="Iran rejects plan; sets 5 conditions; Hormuz toll road operational" data-tip-note="Iran formally rejected the US proposal but a senior official said Iran is &quot;still reviewing&quot; it. Iran set 5 undisclosed conditions for ceasefire. 20+ vessels now paying transit fees through Iran-controlled Hormuz route. Iran fired 6+ more missile barrages at Israel including cluster bombs in Bnei Brak wounding 9." data-tip-url="https://en.wikipedia.org/wiki/2026_Iran_war"><div class="vtl-date">Mar 25</div><div class="vtl-dot"></div><div class="vtl-event">Iran rejects plan; sets 5 conditions; Hormuz toll road operational</div></div>
+<div class="vtl-row today" data-tip-date="March 26, 2026 · Today" data-tip-title="IRGC Navy Commander killed; US claims 92% of naval assets destroyed" data-tip-note="IDF kills IRGC Navy Commander Alireza Tangsiri and Navy Intelligence Deputy in Bandar Abbas — Tangsiri oversaw all Iranian Hormuz disruption strategy. CENTCOM reports 10,000+ targets struck, 92% of Iran&#x27;s largest vessels destroyed, 2/3 of production facilities eliminated. Iran&#x27;s missile/drone launch rate is down 90% from war&#x27;s start. US envoy Witkoff confirms 15-point plan was sent through Pakistan; Pakistani FM confirms indirect talks are ongoing." data-tip-url="https://en.wikipedia.org/wiki/2026_Iran_war"><div class="vtl-date">Mar 26 ◀</div><div class="vtl-dot"></div><div class="vtl-event">IRGC Navy Commander killed; US claims 92% of naval assets destroyed</div></div>
+</div>
+</div>
+<p>The IDF killed IRGC Navy Commander Alireza Tangsiri and Intelligence Deputy Bahnam Rezaei in Bandar Abbas today, following the killing of the IRGC 1st Naval District commander earlier this week.<sup><a class="fn-ref" href="#fn-2" id="ref-2" data-fn-key="2" data-title="ISW — Bluesky (Iran + Occupation Updates, March 26)" data-url="https://bsky.app/profile/thestudyofwar.bsky.social">[2]</a></sup> Tangsiri was the architect of Iran&#x27;s Hormuz disruption campaign. CENTCOM Commander Brad Cooper reported the combined force has now struck over 10,000 Iranian military targets, destroyed 92% of its largest naval vessels, and eliminated two-thirds of its missile, drone, and naval production infrastructure — with Iran&#x27;s launch rate down 90% from the war&#x27;s start.<sup><a class="fn-ref" href="#fn-2" id="ref-2" data-fn-key="2" data-title="ISW — Bluesky (Iran + Occupation Updates, March 26)" data-url="https://bsky.app/profile/thestudyofwar.bsky.social">[2]</a></sup></p>
+<p>The diplomatic track is now confirmed by both sides. Envoy Witkoff publicly acknowledged the 15-point plan and said it was transmitted through Pakistan.<sup><a class="fn-ref" href="#fn-1" id="ref-1" data-fn-key="1" data-title="Wikipedia — Portal:Current Events" data-url="https://en.wikipedia.org/wiki/Portal:Current<em>events">[1]</a></sup> Pakistani Foreign Minister Ishaq Dar confirmed indirect US-Iran negotiations are underway.<sup><a class="fn-ref" href="#fn-1" id="ref-1" data-fn-key="1" data-title="Wikipedia — Portal:Current Events" data-url="https://en.wikipedia.org/wiki/Portal:Current</em>events">[1]</a></sup> Eight missile waves hit Israel today — small, mostly intercepted. Two people were killed in Abu Dhabi by falling debris from an intercepted Iranian ballistic missile.<sup><a class="fn-ref" href="#fn-1" id="ref-1" data-fn-key="1" data-title="Wikipedia — Portal:Current Events" data-url="https://en.wikipedia.org/wiki/Portal:Current<em>events">[1]</a></sup> Uganda&#x27;s Chief of Defence Forces said Uganda is &quot;ready to join the war on the side of Israel&quot; and would enter soon if Iranian attacks don&#x27;t end.<sup><a class="fn-ref" href="#fn-1" id="ref-1" data-fn-key="1" data-title="Wikipedia — Portal:Current Events" data-url="https://en.wikipedia.org/wiki/Portal:Current</em>events">[1]</a></sup></p>
+<blockquote class="key-point"><strong class="label">Key Point</strong>Iran&#x27;s naval command is effectively decapitated. Its launch capacity is 90% degraded. Its production infrastructure is being systematically dismantled. And the Hormuz toll road still operates. The war Iran is winning is not the one being measured by kill counts.<sup><a class="fn-ref" href="#fn-2" id="ref-2" data-fn-key="2" data-title="ISW — Bluesky (Iran + Occupation Updates, March 26)" data-url="https://bsky.app/profile/thestudyofwar.bsky.social">[2]</a></sup></blockquote>
+</div>
+</details><hr><details open>
+<summary>
+<h2 id="russia-the-iran-war-is-fixing-the-budget-cementing-the-occupation">Russia — The Iran War Is Fixing the Budget; Cementing the Occupation</h2>
+<p class="subtitle">The oil windfall solves a crisis on paper; ISW documents how Russia is using the window</p>
+</summary>
+<div class="section-body">
+<p>Russia&#x27;s federal budget deficit hit 3.45 trillion rubles ($42 billion) by February — 91% of the full-year target in two months, driven by a 47% collapse in oil and gas revenues against a budget built on $59/barrel Urals price.<sup><a class="fn-ref" href="#fn-3" id="ref-3" data-fn-key="3" data-title="Meduza — Soaring oil prices could bring the Kremlin billions — but they still won&#x27;t fix the Russian economy" data-url="https://meduza.io/en/feature/2026/03/26/soaring-oil-prices-could-bring-the-kremlin-billions-but-they-still-won-t-fix-the-russian-economy">[3]</a></sup> The Iran war changed the math. Urals crude jumped from roughly $45/barrel in February to $75 in March. Each $10 monthly increase generates approximately $1.63 billion in additional tax revenue. A $20 increase sustained for six months adds $38 billion — enough to make the annual budget target achievable.<sup><a class="fn-ref" href="#fn-3" id="ref-3" data-fn-key="3" data-title="Meduza — Soaring oil prices could bring the Kremlin billions — but they still won&#x27;t fix the Russian economy" data-url="https://meduza.io/en/feature/2026/03/26/soaring-oil-prices-could-bring-the-kremlin-billions-but-they-still-won-t-fix-the-russian-economy">[3]</a></sup></p>
+<p>But today&#x27;s Meduza analysis is clear that the windfall doesn&#x27;t fix what&#x27;s broken. The Central Bank&#x27;s composite business climate indicator turned negative (-0.1) in March for the first time since October 2022. Investment in fixed capital fell 2.3% in real terms in 2025. Pension replacement rates fell from 31% to 25% between 2018 and 2025. The Finance Ministry has asked agencies to identify 10% of non-military spending for cuts — meaning healthcare, education, and infrastructure bear the cost of a war the oil sector is temporarily funding.<sup><a class="fn-ref" href="#fn-3" id="ref-3" data-fn-key="3" data-title="Meduza — Soaring oil prices could bring the Kremlin billions — but they still won&#x27;t fix the Russian economy" data-url="https://meduza.io/en/feature/2026/03/26/soaring-oil-prices-could-bring-the-kremlin-billions-but-they-still-won-t-fix-the-russian-economy">[3]</a></sup></p>
+<p>ISW&#x27;s occupation update today shows how Russia is spending the window. Moscow is planning a road network connecting major occupied Ukrainian cities to incentivize investment and integrate the territories physically into Russia. VTB Bank is expanding mobile banking services into occupied Ukraine. The Nakhimov Naval School is positioning itself as a &quot;hub for training youth in occupied Ukraine on how to develop and operate combat drones.&quot;<sup><a class="fn-ref" href="#fn-2" id="ref-2" data-fn-key="2" data-title="ISW — Bluesky (Iran + Occupation Updates, March 26)" data-url="https://bsky.app/profile/thestudyofwar.bsky.social">[2]</a></sup> Three Ukrainian teenagers were sentenced by a Russian military court to extensive prison sentences on likely fabricated terrorism charges. A group of Ukrainian children from frontline Zaporizhia Oblast was temporarily deported to Russia&#x27;s Karelia region — framed as a &quot;propaganda trip.&quot;<sup><a class="fn-ref" href="#fn-2" id="ref-2" data-fn-key="2" data-title="ISW — Bluesky (Iran + Occupation Updates, March 26)" data-url="https://bsky.app/profile/thestudyofwar.bsky.social">[2]</a></sup></p>
+<blockquote class="watch"><strong class="label">Watch</strong>Russia is explicitly cutting civilian spending — healthcare, education, infrastructure — while using an oil windfall to fund a war economy and using the windfall window to cement permanent occupation infrastructure. The Karelia deportations and drone-training schools are not incidental. They are the long-term strategy.<sup><a class="fn-ref" href="#fn-2" id="ref-2" data-fn-key="2" data-title="ISW — Bluesky (Iran + Occupation Updates, March 26)" data-url="https://bsky.app/profile/thestudyofwar.bsky.social">[2]</a></sup><sup><a class="fn-ref" href="#fn-3" id="ref-3" data-fn-key="3" data-title="Meduza — Soaring oil prices could bring the Kremlin billions — but they still won&#x27;t fix the Russian economy" data-url="https://meduza.io/en/feature/2026/03/26/soaring-oil-prices-could-bring-the-kremlin-billions-but-they-still-won-t-fix-the-russian-economy">[3]</a></sup></blockquote>
+</div>
+</details><hr><details open>
+<summary>
+<h2 id="russia-s-information-siege-synchronized-delete-telegram-articles-nationwide">Russia&#x27;s Information Siege — Synchronized &quot;Delete Telegram&quot; Articles Nationwide</h2>
+<p class="subtitle">State media traced to a single Far Eastern source; the goal is making the block feel voluntary</p>
+</summary>
+<div class="section-body">
+<p>A coordinated wave of near-identical articles has appeared across Russian state-controlled regional media — from Kirov to Chelyabinsk to Yoshkar-Ola — all under headlines like &quot;Experts warn: Better delete Telegram before March 31.&quot;<sup><a class="fn-ref" href="#fn-4" id="ref-4" data-fn-key="4" data-title="Meduza — Russian state media is urging users to delete Telegram" data-url="https://meduza.io/en/feature/2026/03/26/russian-state-media-is-urging-users-to-delete-telegram-citing-risks-from-cyberattacks-to-overheating-phones-is-it-actually-unsafe">[4]</a></sup> The articles cite unnamed &quot;lawyers and cybersecurity specialists&quot; and don&#x27;t explain where the March 31 deadline comes from. Meduza traced all versions to a single February 11 source at PrimPress, a Far Eastern outlet tied to regional authorities. Pro-Kremlin tabloid Baza separately published a piece claiming iPhones are breaking because VPNs overload the processor — technically baseless.<sup><a class="fn-ref" href="#fn-4" id="ref-4" data-fn-key="4" data-title="Meduza — Russian state media is urging users to delete Telegram" data-url="https://meduza.io/en/feature/2026/03/26/russian-state-media-is-urging-users-to-delete-telegram-citing-risks-from-cyberattacks-to-overheating-phones-is-it-actually-unsafe">[4]</a></sup></p>
+<blockquote class="watch"><strong class="label">Watch</strong>This is the second layer of the Telegram block. The first layer was throttling the app. The second is propaganda designed to make less tech-savvy Russians believe they <em>want</em> to delete it. The goal is not just restricting access — it&#x27;s rewriting the story about the restriction.<sup><a class="fn-ref" href="#fn-4" id="ref-4" data-fn-key="4" data-title="Meduza — Russian state media is urging users to delete Telegram" data-url="https://meduza.io/en/feature/2026/03/26/russian-state-media-is-urging-users-to-delete-telegram-citing-risks-from-cyberattacks-to-overheating-phones-is-it-actually-unsafe">[4]</a></sup></blockquote>
+</div>
+</details><hr><details open>
+<summary>
+<h2 id="other-consequential-events">Other Consequential Events</h2>
+</summary>
+<div class="section-body">
+
+<p><strong>Belarus–North Korea sign friendship treaty:</strong> Lukashenko signed a &quot;friendship and cooperation&quot; treaty with Kim Jong Un in Pyongyang today.<sup><a class="fn-ref" href="#fn-1" id="ref-1" data-fn-key="1" data-title="Wikipedia — Portal:Current Events" data-url="https://en.wikipedia.org/wiki/Portal:Current_events">[1]</a></sup> ISW notes North Korea is actively integrating Ukrainian battlefield lessons into weapons and tactics development while formalizing its &quot;two hostile states&quot; posture toward South Korea. The autocratic alignment is being institutionalized.</p>
+<p><strong>UK–Russia shadow fleet confrontation:</strong> Russia warned of &quot;political, legal and asymmetric&quot; responses after the UK&#x27;s Chief of the General Staff authorized boarding Russian shadow fleet vessels evading sanctions and warned Britain is on an &quot;inevitable collision course&quot; with Russia.<sup><a class="fn-ref" href="#fn-1" id="ref-1" data-fn-key="1" data-title="Wikipedia — Portal:Current Events" data-url="https://en.wikipedia.org/wiki/Portal:Current_events">[1]</a></sup></p>
+<p><strong>Australia bans short-term Iranian visas:</strong> Australia imposed a six-month ban on tourist and work visa applications from Iranian passport holders, citing concerns about overstays given the war.<sup><a class="fn-ref" href="#fn-1" id="ref-1" data-fn-key="1" data-title="Wikipedia — Portal:Current Events" data-url="https://en.wikipedia.org/wiki/Portal:Current_events">[1]</a></sup></p>
+<p><strong>Norway cuts fuel taxes; Mauritius and South Sudan ration power:</strong> Norway&#x27;s parliament passed temporary petrol and diesel tax cuts. Juba&#x27;s main electricity distributor announced rotational power cuts starting today. Mauritius followed.<sup><a class="fn-ref" href="#fn-1" id="ref-1" data-fn-key="1" data-title="Wikipedia — Portal:Current Events" data-url="https://en.wikipedia.org/wiki/Portal:Current_events">[1]</a></sup> The Iran war&#x27;s energy cost is now visible in government policy outside the Middle East.</p>
+<p><strong>Abel Prize — Gerd Faltings:</strong> The 2026 Abel Prize goes to German mathematician Gerd Faltings for work in arithmetic geometry. At 28, he proved Mordell&#x27;s conjecture — one of the 20th century&#x27;s hardest open problems in number theory — a proof now called Faltings&#x27;s theorem. He is 71.<sup><a class="fn-ref" href="#fn-1" id="ref-1" data-fn-key="1" data-title="Wikipedia — Portal:Current Events" data-url="https://en.wikipedia.org/wiki/Portal:Current_events">[1]</a></sup></p>
+<p><strong>Faroese general election:</strong> Faroe Islanders voted for 33 seats in the Løgting, two days after Denmark&#x27;s own election.<sup><a class="fn-ref" href="#fn-1" id="ref-1" data-fn-key="1" data-title="Wikipedia — Portal:Current Events" data-url="https://en.wikipedia.org/wiki/Portal:Current_events">[1]</a></sup></p>
+<p><strong>ISW — China&#x27;s dark fleet in the Taiwan Strait:</strong> ISW published a new report documenting how the PRC uses disguised and concealed vessels to conduct surveillance and sabotage in the Taiwan Strait and South China Sea — setting conditions for potential military action while maintaining deniability.<sup><a class="fn-ref" href="#fn-2" id="ref-2" data-fn-key="2" data-title="ISW — Bluesky (Iran + Occupation Updates, March 26)" data-url="https://bsky.app/profile/thestudyofwar.bsky.social">[2]</a></sup> Not a current event; a strategic pattern being catalogued.</p>
+</div>
+</details><hr><details open>
+<summary>
+<h2 id="science-discovery">Science &amp; Discovery</h2>
+<p class="subtitle">218 gravitational wave chirps — and a 50-year physics prediction confirmed in a Switzerland lab</p>
+</summary>
+<div class="section-body">
+<figure class="inline-img"><img src="https://apod.nasa.gov/apod/image/2603/GWTC4-Events-Poster-Landscape.jpg" alt="NASA APOD — Black Holes and Neutron Stars: 218 Mergers and Counting" loading="lazy"><figcaption>NASA APOD — Black Holes and Neutron Stars: 218 Mergers and Counting</figcaption></figure>
+<p><em>Black Holes and Neutron Stars: 218 Mergers and Counting</em> — NASA</p>
+<p>Each square in today&#x27;s APOD is a confirmed gravitational wave detection — 218 total from the LIGO-VIRGO-KAGRA Collaboration. The rising frequency plot in each square is a binary pair accelerating toward merger, the final seconds of two objects that may have been orbiting each other for billions of years. Most are black hole–black hole mergers. The universe is violent and continuous. We are cataloguing it one chirp at a time.<sup><a class="fn-ref" href="#fn-1" id="ref-1" data-fn-key="1" data-title="Wikipedia — Portal:Current Events" data-url="https://en.wikipedia.org/wiki/Portal:Current_events">[1]</a></sup></p>
+<p><strong>Physics — Dark points confirmed faster than light:</strong> Researchers at the Technion-Israel Institute of Technology reported in <em>Nature</em> today the first direct experimental measurement of &quot;dark points&quot; — interference features within light wave patterns — confirming a 50-year-old theoretical prediction that these points move superluminally.<sup><a class="fn-ref" href="#fn-6" id="ref-6" data-fn-key="6" data-title="Phys.org — Novel measurement confirms a 50-year-old prediction: Dark points are faster than light" data-url="https://phys.org/news/2026-03-year-dark-faster.html">[6]</a></sup> Nothing physical travels faster than light; the dark point is a geometric feature of the wave, not a particle. But directly measuring them has taken five decades of experimental effort.</p>
+<blockquote class="key-point"><strong class="label">Key Point</strong>The LIGO catalogue has 218 entries. In 2015, the first detection was a Nobel Prize. Now it&#x27;s routine. Science is normalizing the cataloguing of black holes eating each other across the visible universe. That normalization is itself a measurement of how far the field has come.<sup><a class="fn-ref" href="#fn-1" id="ref-1" data-fn-key="1" data-title="Wikipedia — Portal:Current Events" data-url="https://en.wikipedia.org/wiki/Portal:Current_events">[1]</a></sup></blockquote>
+</div>
+</details><hr><details open>
+<summary>
+<h2 id="dispatch-from-the-absurd">Dispatch from the Absurd</h2>
+<p class="subtitle">The Kennedy Center&#x27;s chairman just watched his institution hand its top humor prize to his most prominent critic</p>
+</summary>
+<div class="section-body">
+<p>The Kennedy Center announced today that Bill Maher will receive the Mark Twain Prize for American Humor.<sup><a class="fn-ref" href="#fn-5" id="ref-5" data-fn-key="5" data-title="NPR — Bill Maher is getting the Mark Twain Prize after all" data-url="https://text.npr.org/nx-s1-5762207">[5]</a></sup> Trump chairs the Kennedy Center&#x27;s board. He previously called Maher a &quot;highly overrated LIGHTWEIGHT.&quot; Maher&#x27;s recent monologue: &quot;Trump said, &#x27;when oil prices go up, we make a lot of money.&#x27; Um, who&#x27;s &#x27;we?&#x27;&quot; Maher&#x27;s acceptance statement: &quot;It is indeed humbling to get anything named for a man who&#x27;s been thrown out of as many school libraries as Mark Twain.&quot;</p>
+<blockquote class="absurd"><strong class="label">Dispatch from the Absurd</strong>The Mark Twain Prize — named for America&#x27;s most celebrated satirist, awarded by a board chaired by Donald Trump — is going to the comedian systematically mocking the board&#x27;s chairman&#x27;s war. The institution is defying its chairman in real time. The show streams on Netflix. Mark Twain would have written this. No one would have believed it.<sup><a class="fn-ref" href="#fn-5" id="ref-5" data-fn-key="5" data-title="NPR — Bill Maher is getting the Mark Twain Prize after all" data-url="https://text.npr.org/nx-s1-5762207">[5]</a></sup></blockquote>
+</div>
+</details><hr><div class="footnotes"><h2>Sources</h2><ol><li id="fn-1"><a href="https://en.wikipedia.org/wiki/Portal:Current_events" target="_blank" rel="noopener">Wikipedia — Portal:Current Events</a><a class="backref" href="#ref-1">↩</a></li><li id="fn-2"><a href="https://bsky.app/profile/thestudyofwar.bsky.social" target="_blank" rel="noopener">ISW — Bluesky (Iran + Occupation Updates, March 26)</a><a class="backref" href="#ref-2">↩</a></li><li id="fn-3"><a href="https://meduza.io/en/feature/2026/03/26/soaring-oil-prices-could-bring-the-kremlin-billions-but-they-still-won-t-fix-the-russian-economy" target="_blank" rel="noopener">Meduza — Soaring oil prices could bring the Kremlin billions — but they still won&#x27;t fix the Russian economy</a><a class="backref" href="#ref-3">↩</a></li><li id="fn-4"><a href="https://meduza.io/en/feature/2026/03/26/russian-state-media-is-urging-users-to-delete-telegram-citing-risks-from-cyberattacks-to-overheating-phones-is-it-actually-unsafe" target="_blank" rel="noopener">Meduza — Russian state media is urging users to delete Telegram</a><a class="backref" href="#ref-4">↩</a></li><li id="fn-5"><a href="https://text.npr.org/nx-s1-5762207" target="_blank" rel="noopener">NPR — Bill Maher is getting the Mark Twain Prize after all</a><a class="backref" href="#ref-5">↩</a></li><li id="fn-6"><a href="https://phys.org/news/2026-03-year-dark-faster.html" target="_blank" rel="noopener">Phys.org — Novel measurement confirms a 50-year-old prediction: Dark points are faster than light</a><a class="backref" href="#ref-6">↩</a></li></ol></div>
+</div>
+
+<script>
+// ── Footnote hover tooltips ─────────────────────────────────────────────
+const FN_DATA = {"1": {"title": "Wikipedia \u2014 Portal:Current Events", "url": "https://en.wikipedia.org/wiki/Portal:Current_events"}, "2": {"title": "ISW \u2014 Bluesky (Iran + Occupation Updates, March 26)", "url": "https://bsky.app/profile/thestudyofwar.bsky.social"}, "3": {"title": "Meduza \u2014 Soaring oil prices could bring the Kremlin billions \u2014 but they still won't fix the Russian economy", "url": "https://meduza.io/en/feature/2026/03/26/soaring-oil-prices-could-bring-the-kremlin-billions-but-they-still-won-t-fix-the-russian-economy"}, "4": {"title": "Meduza \u2014 Russian state media is urging users to delete Telegram", "url": "https://meduza.io/en/feature/2026/03/26/russian-state-media-is-urging-users-to-delete-telegram-citing-risks-from-cyberattacks-to-overheating-phones-is-it-actually-unsafe"}, "5": {"title": "NPR \u2014 Bill Maher is getting the Mark Twain Prize after all", "url": "https://text.npr.org/nx-s1-5762207"}, "6": {"title": "Phys.org \u2014 Novel measurement confirms a 50-year-old prediction: Dark points are faster than light", "url": "https://phys.org/news/2026-03-year-dark-faster.html"}};
+let _tipTimeout;
+const _tip = document.getElementById('fn-tooltip');
+
+function _showTip(anchor) {
+  clearTimeout(_tipTimeout);
+  const key = anchor.dataset.fnKey;
+  const fn = FN_DATA[key];
+  if (!fn) return;
+  const num = '<span class="tip-num">[' + key + ']</span>';
+  _tip.innerHTML = fn.url
+    ? num + '<a href="' + fn.url + '" target="_blank" rel="noopener">' + _esc(fn.title) + ' ↗</a>'
+    : num + _esc(fn.title);
+  _tip.style.display = 'block';
+  // Position: above and left-aligned to anchor
+  const r = anchor.getBoundingClientRect();
+  const tipW = Math.min(520, _tip.scrollWidth + 30);
+  let left = r.left + window.scrollX;
+  if (left + tipW > window.innerWidth - 16) left = window.innerWidth - tipW - 16;
+  _tip.style.left = Math.max(8, left) + 'px';
+  _tip.style.top  = (r.top + window.scrollY - _tip.offsetHeight - 10) + 'px';
+}
+
+function _hideTip() {
+  _tipTimeout = setTimeout(() => { _tip.style.display = 'none'; }, 180);
+}
+
+function _esc(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+document.querySelectorAll('.fn-ref').forEach(el => {
+  el.addEventListener('mouseenter', () => _showTip(el));
+  el.addEventListener('mouseleave', _hideTip);
+});
+_tip.addEventListener('mouseenter', () => clearTimeout(_tipTimeout));
+_tip.addEventListener('mouseleave', _hideTip);
+
+// ── Video modal ─────────────────────────────────────────────────────────
+const _modal     = document.getElementById('video-modal');
+const _modalIframe = document.getElementById('modal-iframe');
+const _modalAudio  = document.getElementById('modal-audio');
+
+function openMedia(url, type) {
+  if (type === 'audio') {
+    _modalIframe.style.display = 'none';
+    _modalAudio.style.display  = 'block';
+    _modalAudio.src = url;
+    _modalAudio.play();
+  } else {
+    _modalIframe.style.display = 'block';
+    _modalAudio.style.display  = 'none';
+    _modalIframe.src = url;
+  }
+  _modal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeMedia() {
+  _modal.classList.remove('open');
+  _modalIframe.src = '';
+  _modalAudio.pause();
+  _modalAudio.src  = '';
+  document.body.style.overflow = '';
+}
+
+_modal.addEventListener('click', e => {
+  if (e.target === _modal) closeMedia();
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeMedia();
+});
+
+// ── Collapse / expand all sections ──────────────────────────────────────
+function toggleAllSections() {
+  const details = document.querySelectorAll('details');
+  const btn = document.getElementById('toggle-all-btn');
+  const anyOpen = Array.from(details).some(d => d.open);
+  details.forEach(d => { d.open = !anyOpen; });
+  btn.textContent = anyOpen ? 'Expand all' : 'Collapse all';
+}
+
+// ── Timeline hover tooltips ──────────────────────────────────────────────
+const _tlTip = document.getElementById('tl-tooltip');
+let _tlTimeout;
+
+function _showTlTip(row) {
+  clearTimeout(_tlTimeout);
+  document.getElementById('tip-date').textContent  = row.dataset.tipDate  || '';
+  document.getElementById('tip-title').textContent = row.dataset.tipTitle || '';
+  document.getElementById('tip-note').textContent  = row.dataset.tipNote  || '';
+  document.getElementById('tip-link').href = row.dataset.tipUrl || '#';
+  _tlTip.style.display = 'block';
+
+  const r    = row.getBoundingClientRect();
+  const tipH = _tlTip.offsetHeight;
+  const tipW = 280;
+  let top  = r.top + window.scrollY - tipH - 4;
+  let left = r.left + window.scrollX;
+
+  // Clamp horizontally so tooltip never clips off screen
+  if (left + tipW > window.innerWidth - 12) left = window.innerWidth - tipW - 12;
+  left = Math.max(8, left);
+
+  // If tooltip would go above viewport, show below the row instead
+  if (top < window.scrollY + 8) top = r.bottom + window.scrollY + 4;
+
+  _tlTip.style.top  = top + 'px';
+  _tlTip.style.left = left + 'px';
+}
+
+function _hideTlTip(delay) {
+  _tlTimeout = setTimeout(() => { _tlTip.style.display = 'none'; }, delay);
+}
+
+document.querySelectorAll('.vtl-row[data-tip-title]').forEach(row => {
+  row.addEventListener('mouseenter', () => _showTlTip(row));
+  row.addEventListener('mouseleave', () => _hideTlTip(300));
+});
+_tlTip.addEventListener('mouseenter', () => clearTimeout(_tlTimeout));
+_tlTip.addEventListener('mouseleave', () => _hideTlTip(120));
+</script>
+
+</body>
+</html>
